@@ -1,0 +1,2202 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدرس التفاعلي للمفردات - Vocabulary</title>
+    <!-- تحميل مكتبة Tailwind CSS للتصميم العصري المتجاوب -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- تحميل خطوط عربية وإنجليزية واضحة ومناسبة للأطفال -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- أيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f8fafc;
+            background-image:
+                radial-gradient(at 10% 10%, rgba(251, 207, 232, 0.45) 0px, transparent 50%),
+                radial-gradient(at 90% 15%, rgba(186, 230, 253, 0.45) 0px, transparent 50%),
+                radial-gradient(at 85% 85%, rgba(254, 240, 138, 0.45) 0px, transparent 50%),
+                radial-gradient(at 15% 85%, rgba(167, 243, 208, 0.45) 0px, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230d9488' fill-opacity='0.07'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-attachment: fixed;
+        }
+        .en-text {
+            font-family: 'Fredoka', 'Inter', sans-serif;
+            direction: ltr;
+            unicode-bidi: isolate;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.85); opacity: 0.8; }
+            50% { transform: scale(1.15); opacity: 0.3; }
+            100% { transform: scale(0.85); opacity: 0.8; }
+        }
+        .speaking-ring {
+            animation: pulse-ring 1.5s infinite ease-in-out;
+        }
+        @keyframes spin-slow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .sun-rays {
+            animation: spin-slow 18s linear infinite;
+            transform-origin: center;
+        }
+        .audio-btn {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .audio-btn:hover {
+            transform: scale(1.08);
+        }
+        .audio-btn:active {
+            transform: scale(0.95);
+        }
+        .shake {
+            animation: shake 0.4s ease-in-out;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        /* تظليل البطاقة أو السطر النشط أثناء قراءة المعلمة */
+        .active-reading-box {
+            background-color: #fef9c3 !important;
+            border-color: #f59e0b !important;
+            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.32), 0 10px 18px -3px rgba(245, 158, 11, 0.2) !important;
+            transform: scale(1.02);
+            transition: all 0.25s ease;
+        }
+        .active-reading-text {
+            background: linear-gradient(120deg, #fde047 0%, #fef08a 100%);
+            padding: 2px 8px;
+            border-radius: 8px;
+            color: #78350f !important;
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+            transition: all 0.25s ease;
+        }
+        .vocab-input {
+            font-family: 'Fredoka', 'Inter', sans-serif;
+            direction: ltr;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+        .vocab-input:focus {
+            outline: none;
+            border-color: #0284c7;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2);
+        }
+        /* تنسيقات صندوق الكلمات والسحب والإفلات */
+        .word-chip {
+            cursor: grab;
+            user-select: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .word-chip:active {
+            cursor: grabbing;
+            transform: scale(0.95);
+        }
+        .word-chip.selected-chip {
+            background-color: #fef08a !important;
+            border-color: #f59e0b !important;
+            color: #78350f !important;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.35);
+            transform: translateY(-2px);
+        }
+        .word-chip.used-chip {
+            opacity: 0.38;
+            pointer-events: none;
+            filter: grayscale(40%);
+        }
+        .drop-zone {
+            min-height: 38px;
+            transition: all 0.2s ease;
+        }
+        .drop-zone.drag-over {
+            background-color: #e0f2fe !important;
+            border-color: #0284c7 !important;
+            border-style: solid !important;
+            transform: scale(1.02);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 pb-16">
+
+    <!-- شريط علوي ثابت يوضح حالة المعلمة الصوتية -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-pink-100">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+            <!-- عنوان الدرس -->
+            <div class="flex items-center gap-3">
+                <div class="bg-gradient-to-r from-pink-500 to-rose-500 text-white px-5 py-1.5 rounded-full font-bold text-xl shadow-md flex items-center gap-2">
+                    <span class="en-text">Vocabulary</span>
+                    <i class="fa-solid fa-sun text-yellow-300 text-base"></i>
+                </div>
+                <span class="hidden sm:inline-block text-sm font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
+                    الصفحة 23 • المفردات اليومية
+                </span>
+            </div>
+
+            <!-- مؤشر المعلمة الصوتية -->
+            <div id="teacher-status-box" class="flex flex-wrap items-center gap-2.5 bg-teal-50 border border-teal-200 px-3.5 py-1.5 rounded-full shadow-inner">
+                <div class="relative flex items-center justify-center w-8 h-8 rounded-full bg-teal-600 text-white shrink-0">
+                    <span id="teacher-pulse" class="hidden absolute inset-0 rounded-full bg-teal-400 speaking-ring"></span>
+                    <i class="fa-solid fa-chalkboard-user relative z-10 text-sm"></i>
+                </div>
+                <div class="text-xs sm:text-sm">
+                    <p id="teacher-status-text" class="font-bold text-teal-800">المعلمة جاهزة للقراءة</p>
+                    <div class="flex items-center gap-1.5 text-[11px] text-teal-700">
+                        <span>الصوت:</span>
+                        <select id="teacher-voice-select" onchange="changeTeacherVoice(this.value)" class="bg-white/90 border border-teal-300 rounded-lg px-2 py-0.5 text-[11px] font-bold text-teal-900 focus:outline-none cursor-pointer">
+                            <option value="Achernar" selected>Achernar (معلمة هادئة جداً وناعمة - الأفضل)</option>
+                            <option value="Vindemiatrix">Vindemiatrix (نبرة لطيفة وهادئة)</option>
+                            <option value="Sulafat">Sulafat (معلمة دافئة وواضحة)</option>
+                            <option value="Aoede">Aoede (نبرة مشرقة وهادئة)</option>
+                        </select>
+                        <button onclick="toggleSpeechSpeed()" id="speed-toggle-btn" class="bg-white/90 hover:bg-teal-100 border border-teal-300 rounded-lg px-2 py-0.5 text-[11px] font-bold text-teal-900 transition cursor-pointer" title="تبديل سرعة النطق للتدريب">
+                            <i class="fa-solid fa-gauge-high text-teal-600"></i> <span id="speed-label">عادي</span>
+                        </button>
+                    </div>
+                </div>
+                <button onclick="stopAudio()" id="stop-audio-btn" class="hidden mr-1 bg-rose-100 hover:bg-rose-200 text-rose-700 px-2.5 py-1 rounded-full text-xs font-bold transition">
+                    <i class="fa-solid fa-stop"></i> إيقاف
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- صندوق الإشعارات اللطيف للأطفال -->
+    <div id="toast-message" class="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-50 hidden bg-slate-800 text-white px-6 py-3 rounded-2xl shadow-xl font-bold text-sm flex items-center gap-2 transition-all">
+        <i class="fa-solid fa-sparkles text-yellow-400"></i>
+        <span id="toast-text">أحسنت!</span>
+    </div>
+
+    <!-- المحتوى الرئيسي للدرس -->
+    <main class="max-w-5xl mx-auto px-4 pt-6 space-y-10">
+
+        <!-- ========================================== -->
+        <!-- القسم الأول (تمرين 3): Look and complete -->
+        <!-- ========================================== -->
+        <section class="bg-white rounded-3xl shadow-lg border border-pink-100 overflow-hidden">
+            <!-- رأس القسم -->
+            <div dir="ltr" class="bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 p-4 sm:px-6 flex flex-wrap items-center justify-between gap-3 text-white">
+                <div class="flex items-center gap-3">
+                    <span class="bg-white text-pink-600 w-8 h-8 rounded-full flex items-center justify-center font-extrabold text-lg shadow">3</span>
+                    <h2 class="en-text text-xl sm:text-2xl font-bold tracking-wide">Look and complete.</h2>
+                    <span dir="rtl" class="text-pink-100 text-sm hidden md:inline">(انظر للصورة وأكمل الكلمة واستمع لنطق المعلمة)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button dir="rtl" onclick="speakSequence(allVocabPhrases, this)" class="audio-btn bg-white/25 hover:bg-white/35 text-white border border-white/40 px-4 py-1.5 rounded-full text-sm font-bold flex items-center gap-2 backdrop-blur-sm">
+                        <i class="fa-solid fa-volume-high"></i>
+                        <span>استمع لجميع الكلمات (12)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- شريط أدوات التمرين الثالث -->
+            <div class="bg-amber-50/80 border-b border-amber-100 px-5 py-3 flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-2.5 text-sm text-amber-900">
+                    <i class="fa-solid fa-hand-pointer text-amber-500 text-lg"></i>
+                    <p><strong>طريقة الحل:</strong> اسحب الكلمة من <strong>صندوق الكلمات</strong> وأفلتها في البطاقة المناسبة (أو اضغط على الكلمة ثم اضغط على مكانها)!</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="checkAllVocab()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold shadow flex items-center gap-1.5 transition">
+                        <i class="fa-solid fa-check-double"></i>
+                        <span>تحقق من إجاباتي</span>
+                    </button>
+                    <button onclick="showAllVocabAnswers()" class="bg-sky-100 hover:bg-sky-200 text-sky-800 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition">
+                        <i class="fa-solid fa-eye"></i>
+                        <span>إظهار الحل</span>
+                    </button>
+                    <button onclick="resetAllVocab()" class="bg-white hover:bg-rose-50 text-slate-500 hover:text-rose-600 border border-slate-200 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition" title="إعادة المحاولة">
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- صندوق الكلمات التفاعلي (Word Bank) -->
+            <div class="bg-gradient-to-r from-sky-50 via-indigo-50/70 to-pink-50/60 border-b border-sky-100 px-5 py-4">
+                <div class="flex items-center justify-between mb-2.5">
+                    <span class="text-xs sm:text-sm font-extrabold text-sky-900 flex items-center gap-2">
+                        <i class="fa-solid fa-box-open text-sky-600 text-base"></i>
+                        <span>صندوق الكلمات (اسحب وأفلت في الخانة المناسبة):</span>
+                    </span>
+                    <span class="text-[11px] font-bold text-slate-500 hidden sm:inline">اضغط على أي خانة مملوءة لإعادة الكلمة للصندوق</span>
+                </div>
+                <div dir="ltr" id="vocab-word-bank" class="flex flex-wrap items-center justify-center gap-2.5">
+                    <!-- يتم توليد بطاقات الكلمات القابلة للسحب عبر JavaScript -->
+                </div>
+            </div>
+
+            <!-- شبكة البطاقات الـ 12 (من اليسار لليمين كالكتاب تماماً) -->
+            <div dir="ltr" id="vocab-grid" class="p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 bg-gradient-to-b from-white to-slate-50/70">
+                <!-- يتم توليد البطاقات الـ 12 بالرسوم التوضيحية عبر JavaScript لضمان الدقة والنظافة -->
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- القسم الثاني (تمرين 4 و 5): Listen, read, and complete + Chant -->
+        <!-- ========================================== -->
+        <section class="bg-white rounded-3xl shadow-lg border border-indigo-100 overflow-hidden">
+            <!-- رأس القسم -->
+            <div dir="ltr" class="bg-gradient-to-r from-indigo-600 via-blue-600 to-sky-500 p-4 sm:px-6 flex flex-wrap items-center justify-between gap-3 text-white">
+                <div class="flex items-center gap-3">
+                    <span class="bg-white text-indigo-700 w-8 h-8 rounded-full flex items-center justify-center font-extrabold text-lg shadow">4</span>
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-headphones text-pink-200 text-lg"></i>
+                        <h2 class="en-text text-xl sm:text-2xl font-bold tracking-wide">Listen, read, and complete.</h2>
+                    </div>
+                </div>
+                <button dir="rtl" onclick="speakSequence(songAllLines, this)" class="audio-btn bg-white/25 hover:bg-white/35 text-white border border-white/40 px-4 py-1.5 rounded-full text-sm font-bold flex items-center gap-2 backdrop-blur-sm">
+                    <i class="fa-solid fa-music"></i>
+                    <span>استمع للأنشودة كاملة</span>
+                </button>
+            </div>
+
+            <!-- بنك الكلمات المساعد للطفل -->
+            <div class="bg-indigo-50/70 border-b border-indigo-100 px-5 py-3 flex flex-wrap items-center justify-between gap-3">
+                <div class="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
+                    <span class="font-bold text-indigo-900"><i class="fa-solid fa-wand-magic-sparkles text-indigo-500 ml-1"></i> الكلمات المساعدة:</span>
+                    <span dir="ltr" class="en-text bg-white border border-indigo-200 text-indigo-700 font-bold px-3 py-1 rounded-full shadow-xs">get dressed</span>
+                    <span dir="ltr" class="en-text bg-white border border-indigo-200 text-indigo-700 font-bold px-3 py-1 rounded-full shadow-xs">Catch</span>
+                    <span dir="ltr" class="en-text bg-white border border-indigo-200 text-indigo-700 font-bold px-3 py-1 rounded-full shadow-xs">get on</span>
+                    <span dir="ltr" class="en-text bg-white border border-indigo-200 text-indigo-700 font-bold px-3 py-1 rounded-full shadow-xs">comic book</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="checkSongAnswers()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold shadow flex items-center gap-1.5 transition">
+                        <i class="fa-solid fa-check"></i>
+                        <span>تحقق من الأنشودة</span>
+                    </button>
+                    <button onclick="fillSongAnswers()" class="bg-white hover:bg-indigo-100 text-indigo-700 border border-indigo-200 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition">
+                        <span>إظهار الحل</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- نص الأنشودة في عمودين كالكتاب تماماً -->
+            <div dir="ltr" class="p-5 sm:p-7 bg-gradient-to-br from-slate-50 via-indigo-50/40 to-sky-50/50">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- العمود الأيسر من الأنشودة -->
+                    <div class="space-y-4">
+                        <!-- Chorus 1 -->
+                        <div data-speak="Wake up, kid! Come on, wake up! Time to get out of bed! Get up, get dressed, eat a big breakfast. Catch your bus, that's what I said!" class="sentence-box bg-white/95 rounded-2xl p-4 sm:p-5 shadow-sm border-2 border-indigo-100 transition-all">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="en-text text-xs font-extrabold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3 py-0.5 rounded-full italic">Chorus</span>
+                                <button onclick="speakText('Wake up, kid! Come on, wake up! Time to get out of bed! Get up, get dressed, eat a big breakfast. Catch your bus, that\'s what I said!', this)" class="audio-btn w-8 h-8 rounded-full bg-indigo-100 hover:bg-indigo-200 text-indigo-700 flex items-center justify-center">
+                                    <i class="fa-solid fa-volume-high text-xs"></i>
+                                </button>
+                            </div>
+                            <div class="sentence-text en-text text-base sm:text-[17px] text-slate-800 font-medium leading-loose space-y-1.5">
+                                <p>Wake up, kid! Come on, wake up!</p>
+                                <p>Time to get out of bed!</p>
+                                <p class="flex flex-wrap items-center gap-1.5">
+                                    <span>Get up,</span>
+                                    <span class="inline-flex items-center gap-1">
+                                        <span class="text-xs font-bold text-emerald-600">1</span>
+                                        <input id="song-1" type="text" placeholder="............" class="vocab-input w-32 border-b-2 border-indigo-400 bg-indigo-50/50 rounded-t-md px-2 py-0.5 text-indigo-900 font-bold text-sm">
+                                    </span>
+                                    <span>, eat a big breakfast.</span>
+                                </p>
+                                <p class="flex flex-wrap items-center gap-1.5">
+                                    <span class="inline-flex items-center gap-1">
+                                        <span class="text-xs font-bold text-emerald-600">2</span>
+                                        <input id="song-2" type="text" placeholder="........" class="vocab-input w-24 border-b-2 border-indigo-400 bg-indigo-50/50 rounded-t-md px-2 py-0.5 text-indigo-900 font-bold text-sm">
+                                    </span>
+                                    <span>your bus, that's what I said!</span>
+                                </p>
+                            </div>
+                            <p dir="rtl" class="text-right text-xs text-slate-500 font-semibold mt-3 pt-2 border-t border-slate-100 leading-relaxed">
+                                استيقظ يا صغيري! هيا استيقظ! حان وقت النهوض من السرير! انهض، ارتدِ ملابسك، تناول فطوراً كبيراً. الحق بحافلتك، هذا ما قلته!
+                            </p>
+                        </div>
+
+                        <!-- Verse -->
+                        <div data-speak="I am running to the bus stop. Hey, Mr. Bus Driver, can you wait? I need to get on this bus, But I am really late!" class="sentence-box bg-white/95 rounded-2xl p-4 sm:p-5 shadow-sm border-2 border-sky-100 transition-all">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="en-text text-xs font-extrabold uppercase tracking-wider text-sky-600 bg-sky-50 px-3 py-0.5 rounded-full">Verse</span>
+                                <button onclick="speakText('I am running to the bus stop. Hey, Mr. Bus Driver, can you wait? I need to get on this bus, But I am really late!', this)" class="audio-btn w-8 h-8 rounded-full bg-sky-100 hover:bg-sky-200 text-sky-700 flex items-center justify-center">
+                                    <i class="fa-solid fa-volume-high text-xs"></i>
+                                </button>
+                            </div>
+                            <div class="sentence-text en-text text-base sm:text-[17px] text-slate-800 font-medium leading-loose space-y-1.5">
+                                <p>I am running to the bus stop.</p>
+                                <p>Hey, Mr. Bus Driver, can you wait?</p>
+                                <p class="flex flex-wrap items-center gap-1.5">
+                                    <span>I need to</span>
+                                    <span class="inline-flex items-center gap-1">
+                                        <span class="text-xs font-bold text-emerald-600">3</span>
+                                        <input id="song-3" type="text" placeholder="........" class="vocab-input w-24 border-b-2 border-sky-400 bg-sky-50/50 rounded-t-md px-2 py-0.5 text-sky-900 font-bold text-sm">
+                                    </span>
+                                    <span>this bus,</span>
+                                </p>
+                                <p>But I am really late!</p>
+                            </div>
+                            <p dir="rtl" class="text-right text-xs text-slate-500 font-semibold mt-3 pt-2 border-t border-slate-100 leading-relaxed">
+                                أنا أركض إلى موقف الحافلة. مرحباً يا سائق الحافلة، هل يمكنك الانتظار؟ أحتاج أن أصعد إلى هذه الحافلة، لكني متأخر حقاً!
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- العمود الأيمن من الأنشودة -->
+                    <div class="space-y-4">
+                        <!-- Chorus 2 -->
+                        <div data-speak="I'm sitting on the bus now! Finally! I feel OK! I'm reading my new comic book. It's going to be a great day!" class="sentence-box bg-white/95 rounded-2xl p-4 sm:p-5 shadow-sm border-2 border-indigo-100 transition-all">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="en-text text-xs font-extrabold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3 py-0.5 rounded-full italic">Chorus</span>
+                                <button onclick="speakText('I\'m sitting on the bus now! Finally! I feel OK! I\'m reading my new comic book. It\'s going to be a great day!', this)" class="audio-btn w-8 h-8 rounded-full bg-indigo-100 hover:bg-indigo-200 text-indigo-700 flex items-center justify-center">
+                                    <i class="fa-solid fa-volume-high text-xs"></i>
+                                </button>
+                            </div>
+                            <div class="sentence-text en-text text-base sm:text-[17px] text-slate-800 font-medium leading-loose space-y-1.5">
+                                <p>I'm sitting on the bus now!</p>
+                                <p>Finally! I feel OK!</p>
+                                <p class="flex flex-wrap items-center gap-1.5">
+                                    <span>I'm reading my new</span>
+                                    <span class="inline-flex items-center gap-1">
+                                        <span class="text-xs font-bold text-emerald-600">4</span>
+                                        <input id="song-4" type="text" placeholder="............" class="vocab-input w-32 border-b-2 border-indigo-400 bg-indigo-50/50 rounded-t-md px-2 py-0.5 text-indigo-900 font-bold text-sm">
+                                    </span>
+                                </p>
+                                <p>It's going to be a great day!</p>
+                            </div>
+                            <p dir="rtl" class="text-right text-xs text-slate-500 font-semibold mt-3 pt-2 border-t border-slate-100 leading-relaxed">
+                                أنا أجلس في الحافلة الآن! أخيراً! أشعر أنني بخير! أنا أقرأ كتابي المصور الجديد. سيكون يوماً رائعاً!
+                            </p>
+                        </div>
+
+                        <!-- التمرين 5: Listen again and chant -->
+                        <div class="bg-gradient-to-r from-pink-50 to-amber-50 rounded-2xl p-4 sm:p-5 border-2 border-pink-200 shadow-sm">
+                            <div class="flex items-center justify-between gap-3">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="bg-pink-600 text-white w-7 h-7 rounded-full flex items-center justify-center font-extrabold text-sm shadow">5</span>
+                                    <i class="fa-solid fa-headphones text-pink-600 text-lg"></i>
+                                    <h3 class="en-text text-lg font-bold text-slate-800">Listen again and chant.</h3>
+                                </div>
+                                <button dir="rtl" onclick="speakSequence(songAllLines, this)" class="audio-btn bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-full text-xs sm:text-sm font-bold shadow flex items-center gap-2">
+                                    <i class="fa-solid fa-play"></i>
+                                    <span>ردّد مع المعلمة</span>
+                                </button>
+                            </div>
+                            <p dir="rtl" class="text-right text-xs text-slate-600 font-semibold mt-2.5">
+                                استمع للأنشودة مرة أخرى وردّدها بصوت جميل مع المعلمة لتثبيت الكلمات الجديدة!
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- القسم الثالث (تمرين 6): Describe how you help your family -->
+        <!-- ========================================== -->
+        <section class="bg-white rounded-3xl shadow-lg border border-emerald-100 overflow-hidden">
+            <!-- رأس القسم -->
+            <div dir="ltr" class="bg-gradient-to-r from-emerald-600 to-teal-600 p-4 sm:px-6 flex flex-wrap items-center justify-between gap-3 text-white">
+                <div class="flex items-center gap-3">
+                    <span class="bg-white text-emerald-700 w-8 h-8 rounded-full flex items-center justify-center font-extrabold text-lg shadow">6</span>
+                    <h2 class="en-text text-xl sm:text-2xl font-bold tracking-wide">Describe how you help your family.</h2>
+                </div>
+                <button dir="rtl" onclick="speakSequence(['I cut the grass for my dad.', 'I go with my grandparents to the supermarket.'], this)" class="audio-btn bg-white/25 hover:bg-white/35 text-white border border-white/40 px-4 py-1.5 rounded-full text-sm font-bold flex items-center gap-2 backdrop-blur-sm">
+                    <i class="fa-solid fa-volume-high"></i>
+                    <span>استمع للأمثلة</span>
+                </button>
+            </div>
+
+            <!-- الشخصيتان وفقاعات الكلام كالكتاب تماماً -->
+            <div dir="ltr" class="p-5 sm:p-7 bg-gradient-to-b from-emerald-50/40 to-white space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- الطفل الأول -->
+                    <div data-speak="I cut the grass for my dad." class="sentence-box bg-white rounded-3xl p-4 sm:p-5 border-2 border-pink-200 shadow-md flex items-center gap-4 transition-all">
+                        <!-- صورة الطفل الأول مع رسم بديل مطابق -->
+                        <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-white border-2 border-pink-200 shrink-0 overflow-hidden flex items-end justify-center">
+                            <img src="image_5b2f08.png" alt="Boy 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" class="w-full h-full object-cover object-top bg-white">
+                            <svg viewBox="0 0 100 100" style="display:none;" class="w-full h-full bg-white">
+                                <rect width="100" height="100" fill="#ffffff"/>
+                                <!-- القميص الأبيض -->
+                                <path d="M12 100 L22 72 Q50 64 78 72 L88 100 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+                                <path d="M36 69 Q50 78 64 69" fill="none" stroke="#94a3b8" stroke-width="1.8"/>
+                                <!-- الرقبة والأذنان -->
+                                <rect x="42" y="54" width="16" height="18" rx="4" fill="#f1c29b"/>
+                                <ellipse cx="29" cy="44" rx="4.5" ry="7" fill="#eab68c"/>
+                                <ellipse cx="71" cy="44" rx="4.5" ry="7" fill="#eab68c"/>
+                                <!-- الوجه -->
+                                <path d="M31 36 Q31 18 50 18 Q69 18 69 36 Q69 58 50 61 Q31 58 31 36 Z" fill="#f5cbb0"/>
+                                <!-- الشعر البني الداكن الكثيف مع الغرة -->
+                                <path d="M30 38 Q28 10 50 9 Q72 10 70 38 Q67 24 62 28 Q57 22 50 28 Q43 22 38 28 Q33 24 30 38 Z" fill="#231712"/>
+                                <!-- الحواجب والعيون -->
+                                <path d="M36 35 Q42 33 46 35" fill="none" stroke="#3b2820" stroke-width="1.6" stroke-linecap="round"/>
+                                <path d="M54 35 Q58 33 64 35" fill="none" stroke="#3b2820" stroke-width="1.6" stroke-linecap="round"/>
+                                <ellipse cx="41" cy="40" rx="3.8" ry="2.6" fill="#ffffff"/>
+                                <circle cx="41" cy="40" r="2.2" fill="#231712"/>
+                                <ellipse cx="59" cy="40" rx="3.8" ry="2.6" fill="#ffffff"/>
+                                <circle cx="59" cy="40" r="2.2" fill="#231712"/>
+                                <!-- الأنف والابتسامة بالأسنان -->
+                                <path d="M47 47 Q50 49 53 47" fill="none" stroke="#c8926b" stroke-width="1.5" stroke-linecap="round"/>
+                                <path d="M41 51 Q50 53 59 51 Q56 57 50 57 Q44 57 41 51 Z" fill="#ffffff" stroke="#b95d62" stroke-width="1.4"/>
+                            </svg>
+                        </div>
+
+                        <!-- فقاعة الكلام -->
+                        <div class="flex-1 bg-pink-50/70 rounded-2xl p-3.5 border-2 border-pink-400 relative">
+                            <div class="flex items-center justify-between mb-1">
+                                <button onclick="speakText('I cut the grass for my dad.', this)" class="audio-btn w-7 h-7 rounded-full bg-pink-500 text-white flex items-center justify-center shadow-sm">
+                                    <i class="fa-solid fa-volume-high text-xs"></i>
+                                </button>
+                                <span dir="rtl" class="text-[11px] font-bold text-pink-700">مثال 1</span>
+                            </div>
+                            <p class="sentence-text en-text text-base sm:text-lg font-bold text-slate-800">
+                                I cut the grass for my dad.
+                            </p>
+                            <p dir="rtl" class="text-right text-xs text-slate-600 font-semibold mt-1.5 pt-1.5 border-t border-pink-200">
+                                أنا أقصّ العشب من أجل والدي.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- الطفل الثاني -->
+                    <div data-speak="I go with my grandparents to the supermarket." class="sentence-box bg-white rounded-3xl p-4 sm:p-5 border-2 border-teal-200 shadow-md flex items-center gap-4 transition-all">
+                        <!-- فقاعة الكلام -->
+                        <div class="flex-1 bg-teal-50/70 rounded-2xl p-3.5 border-2 border-teal-500 relative">
+                            <div class="flex items-center justify-between mb-1">
+                                <button onclick="speakText('I go with my grandparents to the supermarket.', this)" class="audio-btn w-7 h-7 rounded-full bg-teal-600 text-white flex items-center justify-center shadow-sm">
+                                    <i class="fa-solid fa-volume-high text-xs"></i>
+                                </button>
+                                <span dir="rtl" class="text-[11px] font-bold text-teal-800">مثال 2</span>
+                            </div>
+                            <p class="sentence-text en-text text-base sm:text-lg font-bold text-slate-800">
+                                I go with my grandparents to the supermarket.
+                            </p>
+                            <p dir="rtl" class="text-right text-xs text-slate-600 font-semibold mt-1.5 pt-1.5 border-t border-teal-200">
+                                أنا أذهب مع جدي وجدتي إلى السوبرماركت.
+                            </p>
+                        </div>
+
+                        <!-- صورة الطفل الثاني مع رسم بديل مطابق -->
+                        <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-white border-2 border-teal-200 shrink-0 overflow-hidden flex items-end justify-center">
+                            <img src="image_5b3285.png" alt="Boy 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" class="w-full h-full object-cover object-top bg-white">
+                            <svg viewBox="0 0 100 100" style="display:none;" class="w-full h-full bg-white">
+                                <rect width="100" height="100" fill="#ffffff"/>
+                                <!-- القميص الأخضر الداكن بياقة -->
+                                <path d="M10 100 L20 74 Q50 66 80 74 L90 100 Z" fill="#2c4c3b" stroke="#1e3529" stroke-width="1.5"/>
+                                <!-- الرقبة والأذنان -->
+                                <rect x="41" y="54" width="18" height="20" rx="4" fill="#e5b887"/>
+                                <path d="M35 72 L45 84 L50 75 L55 84 L65 72" fill="#233d2f" stroke="#182b21" stroke-width="1.2"/>
+                                <ellipse cx="30" cy="44" rx="4" ry="7" fill="#dca977"/>
+                                <ellipse cx="70" cy="44" rx="4" ry="7" fill="#dca977"/>
+                                <!-- الوجه -->
+                                <path d="M32 34 Q32 16 50 16 Q68 16 68 34 Q68 57 50 61 Q32 57 32 34 Z" fill="#ecc094"/>
+                                <!-- الشعر الأسود القصير -->
+                                <path d="M31 36 Q30 11 50 10 Q70 11 69 36 Q66 23 50 22 Q34 23 31 36 Z" fill="#18181b"/>
+                                <!-- الحواجب والعيون -->
+                                <path d="M36 33 Q42 30 47 34" fill="none" stroke="#18181b" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M53 34 Q58 30 64 33" fill="none" stroke="#18181b" stroke-width="2" stroke-linecap="round"/>
+                                <ellipse cx="42" cy="38" rx="3.8" ry="2.2" fill="#ffffff"/>
+                                <circle cx="42" cy="38" r="1.9" fill="#18181b"/>
+                                <ellipse cx="58" cy="38" rx="3.8" ry="2.2" fill="#ffffff"/>
+                                <circle cx="58" cy="38" r="1.9" fill="#18181b"/>
+                                <!-- الأنف والابتسامة العريضة -->
+                                <path d="M47 45 Q50 47 53 45" fill="none" stroke="#b88456" stroke-width="1.5" stroke-linecap="round"/>
+                                <path d="M39 49 Q50 51 61 49 Q58 56 50 56 Q42 56 39 49 Z" fill="#ffffff" stroke="#a64b50" stroke-width="1.4"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- نشاط تفاعلي إضافي للطفل: كيف تساعد عائلتك؟ -->
+                <div dir="rtl" class="bg-slate-50 rounded-2xl p-4 sm:p-5 border border-slate-200 text-center">
+                    <p class="font-bold text-slate-800 text-sm sm:text-base mb-3 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-hand-holding-heart text-rose-500"></i>
+                        <span>جرب بنفسك! اختر جملة لتستمع كيف تعبّر عن مساعدتك لعائلتك:</span>
+                    </p>
+                    <div dir="ltr" class="flex flex-wrap items-center justify-center gap-2.5">
+                        <button onclick="speakText('I sweep the leaves in the garden.', this)" class="audio-btn bg-white hover:bg-emerald-50 border border-emerald-200 text-emerald-800 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold shadow-xs flex items-center gap-2">
+                            <i class="fa-solid fa-volume-high text-emerald-600"></i>
+                            <span class="en-text">I sweep the leaves in the garden.</span>
+                        </button>
+                        <button onclick="speakText('I take out the trash can.', this)" class="audio-btn bg-white hover:bg-amber-50 border border-amber-200 text-amber-800 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold shadow-xs flex items-center gap-2">
+                            <i class="fa-solid fa-volume-high text-amber-600"></i>
+                            <span class="en-text">I take out the trash can.</span>
+                        </button>
+                        <button onclick="speakText('I make my bed every morning.', this)" class="audio-btn bg-white hover:bg-sky-50 border border-sky-200 text-sky-800 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold shadow-xs flex items-center gap-2">
+                            <i class="fa-solid fa-volume-high text-sky-600"></i>
+                            <span class="en-text">I make my bed every morning.</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- بطاقة الهدف التعليمي: Objective -->
+        <!-- ========================================== -->
+        <section class="pt-4">
+            <div dir="ltr" data-speak="By the end of this lesson, students should be able to describe how they help their family." class="sentence-box relative bg-[#fce7f3] border-[3px] border-[#e11d74] rounded-3xl px-5 sm:px-8 pt-8 pb-5 shadow-md transition-all text-center">
+                <!-- شارة العنوان العلوية -->
+                <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-white border-2 border-[#e11d74] px-6 py-1 rounded-2xl shadow-md flex items-center justify-center gap-2 whitespace-nowrap transform -rotate-1">
+                    <span class="en-text text-xl sm:text-2xl font-extrabold text-[#e11d74] tracking-wide">Objective</span>
+                    <span dir="rtl" class="text-xs font-bold text-pink-600 bg-pink-50 px-2.5 py-0.5 rounded-full">الهدف التعليمي</span>
+                </div>
+
+                <!-- زر الاستماع -->
+                <button onclick="speakText('By the end of this lesson, students should be able to describe how they help their family.', this)" class="audio-btn mx-auto mb-2.5 bg-white hover:bg-pink-100 text-[#e11d74] border border-pink-200 w-9 h-9 rounded-full flex items-center justify-center shadow-sm" title="استمع للهدف">
+                    <i class="fa-solid fa-volume-high text-sm"></i>
+                </button>
+
+                <!-- النص الإنجليزي مطابق للصورة تماماً -->
+                <p class="sentence-text en-text text-center text-base sm:text-lg text-slate-700 font-medium leading-relaxed">
+                    By the end of this lesson, students should be able to <span class="text-[#e11d74] font-bold">describe how they help their family</span>.
+                </p>
+
+                <!-- الترجمة العربية المتوسطة -->
+                <p dir="rtl" class="w-full text-center text-xs sm:text-sm text-pink-900/90 font-bold mt-3 pt-2.5 border-t border-pink-300/70">
+                    بنهاية هذا الدرس، سيكون الطلاب قادرين على وصف كيفية مساعدتهم لعائلاتهم.
+                </p>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- شارة رقم الصفحة والوحدة: UNIT 2 • PAGE 23 -->
+        <!-- ========================================== -->
+        <div class="flex justify-center pt-2">
+            <div dir="ltr" class="bg-[#fffbeb] border border-amber-200/80 rounded-3xl p-3 sm:px-6 shadow-md inline-flex items-center gap-4">
+                <!-- مربع الرقم المتدرج -->
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-rose-500 via-pink-600 to-teal-800 text-white font-extrabold text-xl sm:text-2xl flex items-center justify-center shadow-md shrink-0 en-text">
+                    23
+                </div>
+                <!-- النصوص الإنجليزية والعربية -->
+                <div class="text-left">
+                    <div class="en-text text-lg sm:text-xl font-extrabold text-teal-900 tracking-wide flex items-center gap-1.5">
+                        <span>UNIT 2</span>
+                        <span class="text-teal-700">•</span>
+                        <span>PAGE <span class="text-rose-500">23</span></span>
+                    </div>
+                    <p dir="rtl" class="text-xs sm:text-sm font-bold text-amber-800 mt-0.5 flex items-center gap-1.5">
+                        <i class="fa-solid fa-book-open text-sky-500"></i>
+                        <span>صفحة ٢٣ • كتاب الطالب</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- تذييل تعليمي -->
+    <footer class="max-w-5xl mx-auto px-4 pt-8 pb-4 text-center">
+        <div class="bg-white/80 border border-slate-200/80 rounded-2xl py-3 px-6 inline-flex flex-wrap items-center justify-center gap-3 shadow-sm text-xs sm:text-sm text-slate-600">
+            <span class="en-text font-extrabold text-teal-700 tracking-wide">LANGUA LEARN</span>
+            <span class="text-slate-300">•</span>
+            <span class="font-bold text-slate-700">الأستاذ ماجد سعد السويهري</span>
+        </div>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- البرمجة التفاعلية ونظام الصوت التعليمي للمعلمة -->
+    <!-- ========================================== -->
+    <script>
+        // بيانات المفردات الـ 12 بالترتيب المطابق لصفحة 23 من الكتاب
+        const vocabItems = [
+            {
+                num: 1,
+                phrase: "wake up",
+                hint: "w_ _ _  u _",
+                arabic: "يستيقظ من النوم",
+                solvedByDefault: false,
+                svg: `<div class="w-full h-36 sm:h-40 bg-white flex items-center justify-center overflow-hidden">
+                    <img src="image_4effc5.png" alt="wake up" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" class="w-full h-full object-contain bg-white block mx-auto">
+                    <svg viewBox="0 0 260 220" style="display:none;" class="w-full h-full bg-white">
+                        <!-- خطوط الاستيقاظ فوق الرأس -->
+                        <g stroke="#334155" stroke-width="2" stroke-linecap="round">
+                            <line x1="88" y1="14" x2="88" y2="22"/>
+                            <line x1="78" y1="20" x2="83" y2="25"/>
+                            <line x1="98" y1="20" x2="93" y2="25"/>
+                            <line x1="88" y1="28" x2="88" y2="34"/>
+                        </g>
+                        <!-- المنبه يرن -->
+                        <g transform="translate(185, 78)">
+                            <path d="M-30 -24 L-16 -18 M-26 -10 L-14 -8" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M18 -24 L32 -30 M20 -12 L34 -10" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="-12" y1="16" x2="-20" y2="24" stroke="#be185d" stroke-width="5" stroke-linecap="round"/>
+                            <line x1="12" y1="16" x2="20" y2="24" stroke="#be185d" stroke-width="5" stroke-linecap="round"/>
+                            <path d="M-12 -18 Q0 -30 14 -16 Z" fill="#dc2626" stroke="#1e293b" stroke-width="2"/>
+                            <circle cx="0" cy="0" r="20" fill="#0284c7" stroke="#1e293b" stroke-width="2"/>
+                            <circle cx="0" cy="0" r="14" fill="#fef08a" stroke="#1e293b" stroke-width="1.5"/>
+                            <line x1="0" y1="0" x2="5" y2="-9" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="0" y1="0" x2="-7" y2="4" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="0" cy="0" r="2.2" fill="#1e293b"/>
+                        </g>
+                        <!-- الوسادة الزرقاء خلف الطفل -->
+                        <path d="M40 94 L118 76 L128 122 L52 142 Z" fill="#0284c7" stroke="#1e293b" stroke-width="2.2" stroke-linejoin="round"/>
+                        <!-- الذراعان الممدودتان -->
+                        <path d="M68 106 L34 114 L36 122 L72 114 Z" fill="#fed7aa" stroke="#1e293b" stroke-width="1.8"/>
+                        <circle cx="30" cy="118" r="6" fill="#fed7aa" stroke="#1e293b" stroke-width="1.6"/>
+                        <path d="M106 94 L136 68 L142 74 L112 102 Z" fill="#fed7aa" stroke="#1e293b" stroke-width="1.8"/>
+                        <circle cx="141" cy="68" r="6" fill="#fed7aa" stroke="#1e293b" stroke-width="1.6"/>
+                        <!-- القميص الأخضر -->
+                        <path d="M66 102 L108 90 L116 116 L74 128 Z" fill="#84cc16" stroke="#1e293b" stroke-width="2"/>
+                        <!-- الشعر الكثيف -->
+                        <path d="M46 86 Q34 74 44 62 Q40 46 58 42 Q72 28 94 34 Q114 34 118 52 Q128 62 118 76 Q112 88 98 88 L56 92 Z" fill="#4b5563" stroke="#1e293b" stroke-width="2.2"/>
+                        <!-- الوجه المتثائب -->
+                        <circle cx="84" cy="70" r="22" fill="#fed7aa" stroke="#1e293b" stroke-width="2"/>
+                        <path d="M72 64 L78 67 L72 70" fill="none" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M96 62 L90 65 L96 68" fill="none" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+                        <ellipse cx="69" cy="73" rx="4" ry="2.2" fill="#fca5a5"/>
+                        <ellipse cx="98" cy="71" rx="4" ry="2.2" fill="#fca5a5"/>
+                        <ellipse cx="86" cy="81" rx="6" ry="8" fill="#dc2626" stroke="#1e293b" stroke-width="1.8"/>
+                        <ellipse cx="86" cy="85" rx="4" ry="3" fill="#fca5a5"/>
+                        <!-- الغطاء الأزرق بالسحب البيضاء -->
+                        <path d="M40 164 Q56 114 118 104 Q158 102 184 134 Q224 148 232 182 Q188 198 134 214 Q112 216 108 202 Q66 196 40 164 Z" fill="#0ea5e9" stroke="#1e293b" stroke-width="2.4" stroke-linejoin="round"/>
+                        <ellipse cx="82" cy="144" rx="16" ry="9" fill="#ffffff"/>
+                        <ellipse cx="126" cy="128" rx="18" ry="10" fill="#ffffff"/>
+                        <ellipse cx="164" cy="144" rx="14" ry="8" fill="#ffffff"/>
+                        <ellipse cx="94" cy="182" rx="15" ry="8" fill="#ffffff"/>
+                        <ellipse cx="176" cy="184" rx="16" ry="8" fill="#ffffff"/>
+                        <path d="M98 164 Q134 170 166 156" fill="none" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>`
+            },
+            {
+                num: 2,
+                phrase: "get up",
+                hint: "g_ _  u_",
+                arabic: "ينهض من السرير",
+                solvedByDefault: false,
+                svg: `<div class="w-full h-36 sm:h-40 bg-white flex items-center justify-center overflow-hidden">
+                    <img src="image_4efbc5.png" alt="get up" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" class="w-full h-full object-contain bg-white block mx-auto">
+                    <svg viewBox="0 0 260 230" style="display:none;" class="w-full h-full bg-white">
+                        <!-- السرير الخشبي على اليمين -->
+                        <g>
+                            <rect x="112" y="78" width="8" height="105" fill="#b45309" stroke="#78350f" stroke-width="1.5"/>
+                            <circle cx="116" cy="74" r="6" fill="#b45309" stroke="#78350f" stroke-width="1.5"/>
+                            <rect x="222" y="78" width="8" height="105" fill="#b45309" stroke="#78350f" stroke-width="1.5"/>
+                            <circle cx="226" cy="74" r="6" fill="#b45309" stroke="#78350f" stroke-width="1.5"/>
+                            <path d="M116 86 Q171 66 226 86 L226 140 L116 140 Z" fill="#d97706" stroke="#78350f" stroke-width="2"/>
+                            <rect x="120" y="88" width="102" height="44" rx="12" fill="#a3e635" stroke="#65a30d" stroke-width="1.8"/>
+                            <path d="M98 156 Q165 112 232 146 Q244 162 246 174 Q236 178 230 168 L108 168 Z" fill="#5eead4" stroke="#0d9488" stroke-width="1.8"/>
+                            <rect x="104" y="138" width="9" height="68" fill="#b45309" stroke="#78350f" stroke-width="1.5"/>
+                            <circle cx="108.5" cy="134" r="5.5" fill="#b45309" stroke="#78350f" stroke-width="1.5"/>
+                            <rect x="218" y="138" width="9" height="68" fill="#b45309" stroke="#78350f" stroke-width="1.5"/>
+                            <circle cx="222.5" cy="134" r="5.5" fill="#b45309" stroke="#78350f" stroke-width="1.5"/>
+                            <path d="M108 148 Q165 128 222 148 L222 196 L108 196 Z" fill="#d97706" stroke="#78350f" stroke-width="2"/>
+                            <path d="M165 168 C165 168 156 161 156 155 C156 151 160 149 165 153 C170 149 174 151 174 155 C174 161 165 168 165 168 Z" fill="#34d399" stroke="#065f46" stroke-width="1.5"/>
+                        </g>
+                        <!-- الطفل بالبيجامة الزرقاء المنقطة بالأخضر -->
+                        <g>
+                            <path d="M54 88 L22 54 L34 44 L66 78 Z" fill="#0ea5e9" stroke="#0369a1" stroke-width="1.8"/>
+                            <path d="M22 54 L34 44 L38 48 L26 58 Z" fill="#facc15" stroke="#ca8a04" stroke-width="1.2"/>
+                            <circle cx="23" cy="43" r="8" fill="#fed7aa" stroke="#c2410c" stroke-width="1.5"/>
+                            <path d="M98 86 L136 74 L140 88 L100 100 Z" fill="#0ea5e9" stroke="#0369a1" stroke-width="1.8"/>
+                            <path d="M132 75 L136 74 L140 88 L135 89 Z" fill="#facc15" stroke="#ca8a04" stroke-width="1.2"/>
+                            <circle cx="145" cy="79" r="8" fill="#fed7aa" stroke="#c2410c" stroke-width="1.5"/>
+                            <rect x="52" y="132" width="22" height="58" rx="4" fill="#0ea5e9" stroke="#0369a1" stroke-width="1.8"/>
+                            <rect x="74" y="132" width="22" height="58" rx="4" fill="#0ea5e9" stroke="#0369a1" stroke-width="1.8"/>
+                            <rect x="52" y="182" width="22" height="7" fill="#facc15"/>
+                            <rect x="74" y="182" width="22" height="7" fill="#facc15"/>
+                            <path d="M56 82 L96 82 L102 136 L48 136 Z" fill="#0ea5e9" stroke="#0369a1" stroke-width="1.8"/>
+                            <rect x="48" y="130" width="54" height="6" fill="#facc15"/>
+                            <circle cx="64" cy="100" r="3.2" fill="#84cc16"/><circle cx="88" cy="102" r="3.2" fill="#84cc16"/>
+                            <circle cx="62" cy="118" r="3.2" fill="#84cc16"/><circle cx="88" cy="118" r="3.2" fill="#84cc16"/>
+                            <circle cx="62" cy="150" r="3.2" fill="#84cc16"/><circle cx="85" cy="150" r="3.2" fill="#84cc16"/>
+                            <circle cx="62" cy="170" r="3.2" fill="#84cc16"/><circle cx="85" cy="170" r="3.2" fill="#84cc16"/>
+                            <circle cx="76" cy="96" r="2" fill="#ffffff"/><circle cx="76" cy="108" r="2" fill="#ffffff"/><circle cx="76" cy="120" r="2" fill="#ffffff"/>
+                            <ellipse cx="82" cy="56" rx="26" ry="28" fill="#fed7aa" stroke="#c2410c" stroke-width="1.6"/>
+                            <path d="M58 46 Q62 20 92 22 Q114 26 116 54 Q112 68 104 68 Q106 46 94 38 Q74 42 58 46 Z" fill="#78716c" stroke="#44403c" stroke-width="1.6"/>
+                            <path d="M68 46 Q73 43 78 46" fill="none" stroke="#44403c" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M88 49 Q93 46 98 49" fill="none" stroke="#44403c" stroke-width="2" stroke-linecap="round"/>
+                            <ellipse cx="77" cy="67" rx="7" ry="9" fill="#451a03"/>
+                            <ellipse cx="77" cy="72" rx="5" ry="3.5" fill="#f87171"/>
+                            <ellipse cx="56" cy="202" rx="16" ry="7" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5"/>
+                            <ellipse cx="56" cy="193" rx="3" ry="8" transform="rotate(-15 56 193)" fill="#ffffff" stroke="#64748b" stroke-width="1.2"/>
+                            <ellipse cx="80" cy="205" rx="16" ry="7" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5"/>
+                            <ellipse cx="80" cy="196" rx="3" ry="8" transform="rotate(-15 80 196)" fill="#ffffff" stroke="#64748b" stroke-width="1.2"/>
+                        </g>
+                    </svg>
+                </div>`
+            },
+            {
+                num: 3,
+                phrase: "get dressed",
+                hint: "g_ _  d_ _ _ _ _ _",
+                arabic: "يرتدي ملابسه",
+                solvedByDefault: false,
+                svg: `<div class="w-full h-36 sm:h-40 bg-white flex items-center justify-center overflow-hidden">
+                    <img src="image_4f0423.png" alt="get dressed" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" class="w-full h-full object-contain bg-white block mx-auto">
+                    <svg viewBox="0 0 240 220" style="display:none;" class="w-full h-full bg-white">
+                        <!-- الشعر البني -->
+                        <path d="M72 68 Q68 24 106 18 Q138 12 162 28 Q174 36 168 48 Q182 56 172 72 Q168 82 158 84 L82 84 Q70 78 72 68 Z" fill="#6b2d14"/>
+                        <!-- الأذنان -->
+                        <circle cx="76" cy="86" r="11" fill="#f3b695"/>
+                        <circle cx="76" cy="86" r="6" fill="#e09a76"/>
+                        <circle cx="164" cy="86" r="11" fill="#f3b695"/>
+                        <circle cx="164" cy="86" r="6" fill="#e09a76"/>
+                        <!-- الوجه -->
+                        <path d="M78 66 Q78 44 120 44 Q162 44 162 66 L160 92 Q158 122 120 124 Q82 122 80 92 Z" fill="#f8c3a3"/>
+                        <!-- خصلة الشعر الأمامية -->
+                        <path d="M88 46 Q94 64 106 62 Q114 60 112 46 Z" fill="#6b2d14"/>
+                        <!-- الحواجب -->
+                        <path d="M90 64 Q100 60 108 64" fill="none" stroke="#6b2d14" stroke-width="3.5" stroke-linecap="round"/>
+                        <path d="M132 64 Q140 60 150 64" fill="none" stroke="#6b2d14" stroke-width="3.5" stroke-linecap="round"/>
+                        <!-- العيون -->
+                        <circle cx="99" cy="78" r="11" fill="#ffffff"/>
+                        <circle cx="101" cy="79" r="7" fill="#4a1c0c"/>
+                        <circle cx="103" cy="76" r="2.5" fill="#ffffff"/>
+                        <circle cx="141" cy="78" r="11" fill="#ffffff"/>
+                        <circle cx="139" cy="79" r="7" fill="#4a1c0c"/>
+                        <circle cx="141" cy="76" r="2.5" fill="#ffffff"/>
+                        <!-- الخدود والأنف -->
+                        <ellipse cx="88" cy="92" rx="6" ry="3" fill="#f28b82" opacity="0.7"/>
+                        <ellipse cx="152" cy="92" rx="6" ry="3" fill="#f28b82" opacity="0.7"/>
+                        <path d="M117 90 Q120 86 123 90 Q123 94 119 94" fill="none" stroke="#9e5b3c" stroke-width="2.2" stroke-linecap="round"/>
+                        <!-- الفم المبتسم -->
+                        <path d="M106 99 Q120 101 134 99 Q134 115 120 115 Q106 115 106 99 Z" fill="#8b2635"/>
+                        <path d="M108 100 Q120 101 132 100 Q130 105 120 105 Q110 105 108 100 Z" fill="#ffffff"/>
+                        <ellipse cx="120" cy="112" rx="8" ry="3.5" fill="#e05a6d"/>
+                        <!-- الرقبة والقميص الداخلي الأخضر -->
+                        <rect x="109" y="118" width="22" height="18" rx="8" fill="#f3b695"/>
+                        <path d="M104 130 Q120 140 136 130 L140 202 L100 202 Z" fill="#7cf29c"/>
+                        <!-- القميص الأزرق المفتوح والأزرار -->
+                        <path d="M104 124 L74 134 L62 166 L80 172 L82 208 Q96 212 108 208 L112 146 Z" fill="#3b82f6"/>
+                        <path d="M136 124 L166 134 L178 166 L160 172 L158 208 Q144 212 132 208 L128 146 Z" fill="#3b82f6"/>
+                        <circle cx="134" cy="156" r="3.5" fill="#ffffff"/>
+                        <circle cx="134" cy="176" r="3.5" fill="#ffffff"/>
+                        <circle cx="134" cy="195" r="3.5" fill="#ffffff"/>
+                        <!-- اليدان تزرران القميص -->
+                        <path d="M64 166 Q56 184 68 188 L102 174 Q112 168 104 160 L96 162 L80 172 Z" fill="#f8c3a3"/>
+                        <path d="M176 166 Q184 184 172 188 L138 174 Q128 168 136 160 L144 162 L160 172 Z" fill="#f8c3a3"/>
+                    </svg>
+                </div>`
+            },
+            {
+                num: 4,
+                phrase: "catch the bus",
+                hint: "c_ _ _ _  the bus",
+                arabic: "يلحق بالحافلة",
+                solvedByDefault: false,
+                svg: `<div class="w-full h-36 sm:h-40 bg-white flex items-center justify-center overflow-hidden">
+                    <img src="image_58e98d.jpg" alt="catch the bus" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" class="w-full h-full object-contain bg-white block mx-auto">
+                    <svg viewBox="0 0 280 230" style="display:none;" class="w-full h-full bg-white">
+                        <!-- دخان العادم أسفل الحافلة -->
+                        <g fill="#e2e8f0" stroke="#94a3b8" stroke-width="1">
+                            <circle cx="96" cy="200" r="8"/><circle cx="106" cy="204" r="7"/>
+                            <circle cx="165" cy="212" r="9"/><circle cx="180" cy="210" r="10"/><circle cx="196" cy="212" r="8"/>
+                            <circle cx="255" cy="196" r="7"/><circle cx="262" cy="208" r="8"/>
+                        </g>
+                        <!-- الحافلة المدرسية الصفراء -->
+                        <g>
+                            <!-- الإطارات الخلفية والأمامية -->
+                            <rect x="116" y="182" width="32" height="24" rx="8" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+                            <rect x="208" y="182" width="32" height="24" rx="8" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+                            <!-- الهيكل العلوي للحافلة -->
+                            <path d="M106 34 Q106 10 178 10 Q250 10 250 34 L254 140 L102 140 Z" fill="#facc15" stroke="#0f172a" stroke-width="2.5"/>
+                            <!-- لوحة SCHOOL الملونة والأضواء -->
+                            <rect x="124" y="20" width="108" height="20" rx="6" fill="#fef08a" stroke="#ca8a04" stroke-width="1.5"/>
+                            <text x="178" y="35" font-family="Fredoka, sans-serif" font-size="15" font-weight="bold" text-anchor="middle" stroke="#0f172a" stroke-width="0.6">
+                                <tspan fill="#ef4444">S</tspan><tspan fill="#22c55e">C</tspan><tspan fill="#3b82f6">H</tspan><tspan fill="#a855f7">O</tspan><tspan fill="#f97316">O</tspan><tspan fill="#ec4899">L</tspan>
+                            </text>
+                            <circle cx="112" cy="30" r="8" fill="#f97316" stroke="#0f172a" stroke-width="2"/>
+                            <circle cx="244" cy="30" r="8" fill="#f97316" stroke="#0f172a" stroke-width="2"/>
+                            <!-- الزجاج الأمامي -->
+                            <path d="M116 48 Q178 44 240 48 L242 114 Q178 108 114 114 Z" fill="#93c5fd" stroke="#0f172a" stroke-width="2.2"/>
+                            <polygon points="116,48 164,46 136,112 114,114" fill="#dbeafe" opacity="0.55"/>
+                            <!-- سائق الحافلة -->
+                            <g>
+                                <path d="M174 112 Q198 96 222 112 Z" fill="#2563eb" stroke="#0f172a" stroke-width="2"/>
+                                <path d="M180 112 Q198 100 216 112" fill="none" stroke="#334155" stroke-width="4.5" stroke-linecap="round"/>
+                                <ellipse cx="198" cy="82" rx="20" ry="18" fill="#fed7aa" stroke="#0f172a" stroke-width="2"/>
+                                <path d="M214 70 Q222 80 216 94 L208 92 Q212 80 208 70 Z" fill="#64748b" stroke="#0f172a" stroke-width="1.8"/>
+                                <!-- قبعة السائق -->
+                                <path d="M174 64 Q198 44 224 64 L218 72 L178 72 Z" fill="#1d4ed8" stroke="#0f172a" stroke-width="2"/>
+                                <ellipse cx="196" cy="73" rx="18" ry="5" fill="#475569" stroke="#0f172a" stroke-width="2"/>
+                                <circle cx="198" cy="60" r="4" fill="#facc15" stroke="#0f172a" stroke-width="1.5"/>
+                                <!-- ملامح السائق -->
+                                <ellipse cx="189" cy="80" rx="3.5" ry="4.5" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+                                <circle cx="190" cy="81" r="2" fill="#0f172a"/>
+                                <ellipse cx="201" cy="80" rx="3.5" ry="4.5" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+                                <circle cx="202" cy="81" r="2" fill="#0f172a"/>
+                                <path d="M186 90 Q196 98 206 89" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+                            </g>
+                            <!-- مقدمة المحرك والمصابيح والشبك -->
+                            <path d="M104 126 Q178 106 252 126 L256 178 L100 178 Z" fill="#fde047" stroke="#0f172a" stroke-width="2.5"/>
+                            <rect x="142" y="132" width="72" height="44" rx="10" fill="#94a3b8" stroke="#0f172a" stroke-width="2.2"/>
+                            <line x1="146" y1="141" x2="210" y2="141" stroke="#334155" stroke-width="2.5"/>
+                            <line x1="146" y1="150" x2="210" y2="150" stroke="#334155" stroke-width="2.5"/>
+                            <line x1="146" y1="159" x2="210" y2="159" stroke="#334155" stroke-width="2.5"/>
+                            <line x1="146" y1="168" x2="210" y2="168" stroke="#334155" stroke-width="2.5"/>
+                            <ellipse cx="120" cy="148" rx="9" ry="12" fill="#fb923c" stroke="#0f172a" stroke-width="2"/>
+                            <ellipse cx="236" cy="148" rx="9" ry="12" fill="#fb923c" stroke="#0f172a" stroke-width="2"/>
+                            <!-- الصدام الأمامي -->
+                            <path d="M98 174 Q178 182 258 174 L256 188 Q178 196 100 188 Z" fill="#cbd5e1" stroke="#0f172a" stroke-width="2.2"/>
+                        </g>
+                        <!-- البنت بجانب الحافلة مع فيونكة وردية وحقيبة بنفسجية -->
+                        <g>
+                            <!-- الشعر البني المموج -->
+                            <path d="M36 90 Q16 102 18 118 Q24 128 34 124 Q26 136 38 142 Q52 142 66 130 L74 96 Z" fill="#92400e" stroke="#0f172a" stroke-width="2"/>
+                            <!-- الفيونكة الوردية -->
+                            <path d="M46 72 L34 64 L36 78 Z" fill="#f472b6" stroke="#0f172a" stroke-width="1.8"/>
+                            <path d="M46 72 L56 60 L58 74 Z" fill="#f472b6" stroke="#0f172a" stroke-width="1.8"/>
+                            <circle cx="47" cy="71" r="3.5" fill="#ec4899" stroke="#0f172a" stroke-width="1.5"/>
+                            <!-- الرأس والوجه -->
+                            <circle cx="56" cy="96" r="20" fill="#fed7aa" stroke="#0f172a" stroke-width="2"/>
+                            <path d="M36 92 Q46 72 72 82 Q66 88 56 86 Q44 88 36 92 Z" fill="#92400e" stroke="#0f172a" stroke-width="1.8"/>
+                            <ellipse cx="52" cy="94" rx="3.5" ry="4.5" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+                            <circle cx="53" cy="95" r="2" fill="#0f172a"/>
+                            <ellipse cx="63" cy="94" rx="3.5" ry="4.5" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+                            <circle cx="64" cy="95" r="2" fill="#0f172a"/>
+                            <path d="M52 104 Q60 114 68 103 Z" fill="#f43f5e" stroke="#0f172a" stroke-width="1.8"/>
+                            <!-- القميص الأحمر والتنورة الزرقاء -->
+                            <path d="M40 116 L72 116 L76 146 L36 146 Z" fill="#dc2626" stroke="#0f172a" stroke-width="2"/>
+                            <path d="M38 146 L74 146 L80 166 L32 166 Z" fill="#0284c7" stroke="#0f172a" stroke-width="2"/>
+                            <path d="M32 166 Q40 172 48 166 Q56 172 64 166 Q72 172 80 166 L80 172 Q72 178 64 172 Q56 178 48 172 Q40 178 32 172 Z" fill="#f472b6" stroke="#0f172a" stroke-width="1.5"/>
+                            <!-- الحقيبة البنفسجية بحزام أخضر -->
+                            <path d="M62 116 L46 146" stroke="#16a34a" stroke-width="5" stroke-linecap="round"/>
+                            <ellipse cx="44" cy="152" rx="14" ry="11" fill="#9333ea" stroke="#0f172a" stroke-width="2"/>
+                            <!-- الذراع المرفوعة للحافلة -->
+                            <path d="M72 120 L92 126 L98 112 L104 116 L96 134 L72 130 Z" fill="#dc2626" stroke="#0f172a" stroke-width="1.8"/>
+                            <circle cx="101" cy="112" r="5" fill="#fed7aa" stroke="#0f172a" stroke-width="1.5"/>
+                            <!-- الأرجل والحذاء -->
+                            <path d="M44 172 L38 198 L48 200 L54 172 Z" fill="#fed7aa" stroke="#0f172a" stroke-width="1.8"/>
+                            <path d="M60 172 L68 198 L78 196 L70 172 Z" fill="#fed7aa" stroke="#0f172a" stroke-width="1.8"/>
+                            <ellipse cx="38" cy="204" rx="11" ry="5" fill="#bfdbfe" stroke="#0f172a" stroke-width="1.8"/>
+                            <ellipse cx="76" cy="202" rx="11" ry="5" fill="#bfdbfe" stroke="#0f172a" stroke-width="1.8"/>
+                        </g>
+                    </svg>
+                </div>`
+            },
+            {
+                num: 5,
+                phrase: "get on the bus",
+                hint: "g_ _  o_  the bus",
+                arabic: "يصعد إلى الحافلة",
+                solvedByDefault: false,
+                svg: `<div class="w-full h-44 sm:h-48 bg-white flex items-center justify-center overflow-hidden">
+                    <img src="image_58ed2d.jpg" alt="get on the bus" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" class="w-full h-full object-contain scale-110 bg-white block mx-auto">
+                    <svg viewBox="16 14 248 202" style="display:none;" class="w-full h-full bg-white">
+                        <defs>
+                            <linearGradient id="busBody5" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#fde047"/>
+                                <stop offset="55%" stop-color="#facc15"/>
+                                <stop offset="100%" stop-color="#d97706"/>
+                            </linearGradient>
+                            <linearGradient id="windshield5" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#1e293b"/>
+                                <stop offset="100%" stop-color="#475569"/>
+                            </linearGradient>
+                            <radialGradient id="skin5" cx="40%" cy="35%" r="65%">
+                                <stop offset="0%" stop-color="#ffedd5"/>
+                                <stop offset="100%" stop-color="#fdba74"/>
+                            </radialGradient>
+                        </defs>
+                        <!-- ظل الأرضية -->
+                        <ellipse cx="140" cy="210" rx="115" ry="7" fill="#cbd5e1" opacity="0.65"/>
+                        <!-- قلوب وبالونات ملونة حول الحافلة -->
+                        <g opacity="0.9">
+                            <path d="M36 62 C36 56 26 52 26 60 C26 66 36 74 36 74 C36 74 46 66 46 60 C46 52 36 56 36 62 Z" fill="#f87171"/>
+                            <path d="M58 38 C58 34 51 31 51 37 C51 41 58 46 58 46 C58 46 65 41 65 37 C65 31 58 34 58 38 Z" fill="#fbbf24"/>
+                            <path d="M104 34 C104 30 98 28 98 33 C98 36 104 41 104 41 C104 41 110 36 110 33 C110 28 104 30 104 34 Z" fill="#fb7185"/>
+                            <path d="M164 24 C164 19 156 16 156 23 C156 28 164 34 164 34 C164 34 172 28 172 23 C172 16 164 19 164 24 Z" fill="#93c5fd"/>
+                            <path d="M214 42 C214 38 208 36 208 41 C208 44 214 49 214 49 C214 49 220 44 220 41 C220 36 214 38 214 42 Z" fill="#7dd3fc"/>
+                            <path d="M246 62 C246 56 236 52 236 60 C236 66 246 74 246 74 C246 74 256 66 256 60 C256 52 246 56 246 62 Z" fill="#f87171"/>
+                            <path d="M244 96 C244 92 238 90 238 95 C238 98 244 103 244 103 C244 103 250 98 250 95 C250 90 244 92 244 96 Z" fill="#fbbf24"/>
+                            <path d="M32 96 C32 92 26 90 26 95 C26 98 32 103 32 103 C32 103 38 98 38 95 C38 90 32 92 32 96 Z" fill="#fbbf24"/>
+                        </g>
+                        <!-- الحافلة المدرسية -->
+                        <g>
+                            <rect x="86" y="182" width="22" height="24" rx="6" fill="#1e293b"/>
+                            <rect x="172" y="182" width="22" height="24" rx="6" fill="#1e293b"/>
+                            <!-- المرايا الجانبية -->
+                            <rect x="64" y="84" width="12" height="26" rx="4" fill="#334155"/>
+                            <rect x="204" y="84" width="12" height="26" rx="4" fill="#334155"/>
+                            <!-- هيكل الحافلة -->
+                            <path d="M74 64 Q74 44 140 44 Q206 44 206 64 L208 182 L72 182 Z" fill="url(#busBody5)"/>
+                            <!-- لافتة SCHOOL BUS -->
+                            <path d="M98 50 Q140 47 182 50 L180 68 Q140 65 100 68 Z" fill="#fde047" stroke="#ca8a04" stroke-width="1.5"/>
+                            <text x="140" y="63" font-family="Fredoka, sans-serif" font-size="11.5" font-weight="bold" fill="#1e293b" text-anchor="middle">SCHOOL BUS</text>
+                            <circle cx="84" cy="60" r="5" fill="#f97316"/>
+                            <circle cx="94" cy="59" r="5" fill="#ef4444"/>
+                            <circle cx="186" cy="59" r="5" fill="#ef4444"/>
+                            <circle cx="196" cy="60" r="5" fill="#f97316"/>
+                            <!-- الزجاج الأمامي -->
+                            <path d="M82 74 Q140 70 198 74 L196 134 Q140 128 84 134 Z" fill="url(#windshield5)"/>
+                            <!-- 3 أطفال سعداء داخل الزجاج الأمامي (رؤوسهم متصلة بأكتافهم ورقابهم) -->
+                            <g>
+                                <!-- الطفلة اليسرى -->
+                                <rect x="102" y="117" width="8" height="8" rx="3" fill="url(#skin5)"/>
+                                <path d="M90 133 Q106 119 122 133 Z" fill="#0284c7"/>
+                                <circle cx="106" cy="107" r="14" fill="url(#skin5)"/>
+                                <path d="M91 107 Q91 88 108 88 Q121 90 121 107 Q113 96 102 98 Q95 100 91 107 Z" fill="#78350f"/>
+                                <circle cx="101" cy="107" r="1.8" fill="#1e293b"/><circle cx="111" cy="107" r="1.8" fill="#1e293b"/>
+                                <path d="M102 113 Q106 118 110 113 Z" fill="#f43f5e"/>
+                                <!-- الطفل الأوسط -->
+                                <rect x="136" y="109" width="8" height="9" rx="3" fill="url(#skin5)"/>
+                                <path d="M123 130 Q140 112 157 130 Z" fill="#f97316"/>
+                                <circle cx="140" cy="98" r="14.5" fill="url(#skin5)"/>
+                                <path d="M125 96 Q129 79 144 79 Q155 81 155 96 Q146 86 136 88 Q129 90 125 96 Z" fill="#92400e"/>
+                                <circle cx="135" cy="98" r="1.8" fill="#1e293b"/><circle cx="145" cy="98" r="1.8" fill="#1e293b"/>
+                                <path d="M136 104 Q140 109 144 104 Z" fill="#f43f5e"/>
+                                <!-- الطفل الأيمن -->
+                                <rect x="168" y="117" width="8" height="8" rx="3" fill="url(#skin5)"/>
+                                <path d="M156 133 Q172 119 188 133 Z" fill="#ef4444"/>
+                                <circle cx="172" cy="107" r="14" fill="url(#skin5)"/>
+                                <path d="M157 105 Q161 88 176 88 Q187 90 187 105 Q178 96 168 98 Q161 100 157 105 Z" fill="#451a03"/>
+                                <circle cx="167" cy="107" r="1.8" fill="#1e293b"/><circle cx="177" cy="107" r="1.8" fill="#1e293b"/>
+                                <path d="M168 113 Q172 118 176 113 Z" fill="#f43f5e"/>
+                            </g>
+                            <!-- الشبك والمصابيح والصدام -->
+                            <rect x="114" y="142" width="52" height="24" rx="5" fill="#475569"/>
+                            <line x1="118" y1="148" x2="162" y2="148" stroke="#1e293b" stroke-width="2"/>
+                            <line x1="118" y1="154" x2="162" y2="154" stroke="#1e293b" stroke-width="2"/>
+                            <line x1="118" y1="160" x2="162" y2="160" stroke="#1e293b" stroke-width="2"/>
+                            <circle cx="94" cy="154" r="9" fill="#fef9c3" stroke="#ca8a04" stroke-width="2"/>
+                            <circle cx="186" cy="154" r="9" fill="#fef9c3" stroke="#ca8a04" stroke-width="2"/>
+                            <rect x="74" y="170" width="132" height="14" rx="6" fill="#334155"/>
+                            <rect x="128" y="172" width="24" height="10" rx="2" fill="#f8fafc"/>
+                        </g>
+                        <!-- الولد يقفز بسعادة على اليسار (رأسه ملتصق برقبته وكتفه) -->
+                        <g>
+                            <path d="M48 168 L36 188 L44 192 L56 172 Z" fill="url(#skin5)"/>
+                            <path d="M56 168 L62 194 L70 192 L64 168 Z" fill="url(#skin5)"/>
+                            <ellipse cx="36" cy="192" rx="8" ry="4" fill="#1d4ed8"/>
+                            <ellipse cx="66" cy="196" rx="8" ry="4" fill="#1d4ed8"/>
+                            <rect x="46" y="156" width="20" height="16" rx="4" fill="#92400e"/>
+                            <path d="M44 134 L66 134 L68 158 L44 158 Z" fill="#0ea5e9"/>
+                            <line x1="44" y1="142" x2="67" y2="142" stroke="#ffffff" stroke-width="3"/>
+                            <line x1="44" y1="150" x2="68" y2="150" stroke="#ffffff" stroke-width="3"/>
+                            <path d="M44 138 L26 144 L28 150 L46 144 Z" fill="url(#skin5)"/>
+                            <path d="M66 136 L84 122 L88 128 L68 142 Z" fill="url(#skin5)"/>
+                            <rect x="52" y="129" width="8" height="8" rx="3" fill="url(#skin5)"/>
+                            <circle cx="56" cy="119" r="14.5" fill="url(#skin5)"/>
+                            <path d="M41 117 Q43 98 60 100 Q71 102 71 117 Q62 108 52 110 Z" fill="#451a03"/>
+                            <circle cx="52" cy="119" r="1.8" fill="#1e293b"/><circle cx="62" cy="119" r="1.8" fill="#1e293b"/>
+                            <path d="M53 125 Q58 130 63 125 Z" fill="#f43f5e"/>
+                        </g>
+                        <!-- البنت تقفز بسعادة على اليمين (رأسها ملتصق برقبتها وكتفها) -->
+                        <g>
+                            <path d="M214 168 L210 192 L218 194 L222 170 Z" fill="url(#skin5)"/>
+                            <path d="M222 166 L236 184 L242 178 L228 162 Z" fill="url(#skin5)"/>
+                            <ellipse cx="214" cy="196" rx="8" ry="4" fill="#b45309"/>
+                            <ellipse cx="240" cy="182" rx="7" ry="4" fill="#b45309"/>
+                            <path d="M210 156 L230 156 L234 170 L208 170 Z" fill="#0284c7"/>
+                            <path d="M210 136 L228 136 L230 158 L210 158 Z" fill="#f43f5e"/>
+                            <path d="M210 138 L194 126 L198 120 L212 134 Z" fill="url(#skin5)"/>
+                            <path d="M228 138 L248 148 L244 154 L226 144 Z" fill="url(#skin5)"/>
+                            <rect x="216" y="131" width="8" height="8" rx="3" fill="url(#skin5)"/>
+                            <path d="M203 123 Q205 104 222 104 Q237 106 237 133 L203 133 Z" fill="#78350f"/>
+                            <circle cx="220" cy="121" r="14" fill="url(#skin5)"/>
+                            <circle cx="215" cy="121" r="1.8" fill="#1e293b"/><circle cx="225" cy="121" r="1.8" fill="#1e293b"/>
+                            <path d="M216 127 Q220 132 224 127 Z" fill="#f43f5e"/>
+                        </g>
+                    </svg>
+                </div>`
+            },
+            {
+                num: 6,
+                phrase: "ride on the bus",
+                hint: "r_ _ _  on the bus",
+                arabic: "يركب في الحافلة",
+                solvedByDefault: false,
+                svg: `<div class="w-full h-36 sm:h-40 bg-white flex items-center justify-center overflow-hidden">
+                    <img src="image_58f50c.jpg" alt="ride on the bus" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" class="w-full h-full object-contain bg-white block mx-auto">
+                    <svg viewBox="0 0 280 230" style="display:none;" class="w-full h-full bg-white">
+                        <!-- ظل الأرضية -->
+                        <ellipse cx="145" cy="206" rx="105" ry="7" fill="#cbd5e1" opacity="0.6"/>
+                        <!-- الحافلة المدرسية بزاوية جانبية أمامية -->
+                        <g>
+                            <!-- العجلات -->
+                            <circle cx="80" cy="166" r="20" fill="#334155" stroke="#0f172a" stroke-width="2.2"/>
+                            <circle cx="80" cy="166" r="10" fill="#cbd5e1" stroke="#0f172a" stroke-width="1.5"/>
+                            <circle cx="146" cy="184" r="23" fill="#334155" stroke="#0f172a" stroke-width="2.2"/>
+                            <circle cx="146" cy="184" r="11" fill="#cbd5e1" stroke="#0f172a" stroke-width="1.5"/>
+                            <rect x="218" y="166" width="24" height="22" rx="7" fill="#334155" stroke="#0f172a" stroke-width="2"/>
+                            <!-- جسم الحافلة الصفراء -->
+                            <path d="M40 70 Q42 36 146 32 Q232 34 244 76 L248 164 L168 184 L40 156 Z" fill="#facc15" stroke="#0f172a" stroke-width="2.4" stroke-linejoin="round"/>
+                            <!-- اللوحة العلوية والأضواء -->
+                            <rect x="172" y="42" width="48" height="14" rx="5" fill="#fef08a" stroke="#0f172a" stroke-width="1.8"/>
+                            <rect x="176" y="45" width="40" height="8" rx="3" fill="#f97316"/>
+                            <circle cx="152" cy="50" r="5" fill="#fef9c3" stroke="#0f172a" stroke-width="1.5"/>
+                            <circle cx="164" cy="50" r="4" fill="#f97316" stroke="#0f172a" stroke-width="1.5"/>
+                            <circle cx="226" cy="52" r="4" fill="#f97316" stroke="#0f172a" stroke-width="1.5"/>
+                            <circle cx="236" cy="54" r="5" fill="#fef9c3" stroke="#0f172a" stroke-width="1.5"/>
+                            <!-- المرآة الجانبية -->
+                            <path d="M244 72 L266 74 L264 116 L248 116" fill="none" stroke="#ca8a04" stroke-width="4" stroke-linejoin="round"/>
+                            <rect x="256" y="82" width="12" height="26" rx="4" fill="#facc15" stroke="#0f172a" stroke-width="1.8"/>
+                            <!-- النوافذ الجانبية -->
+                            <rect x="46" y="76" width="24" height="44" rx="5" fill="#7dd3fc" stroke="#0f172a" stroke-width="2"/>
+                            <rect x="76" y="72" width="32" height="46" rx="5" fill="#7dd3fc" stroke="#0f172a" stroke-width="2"/>
+                            <!-- الزجاج الأمامي الكبير -->
+                            <path d="M138 66 Q192 60 238 68 L242 120 Q192 110 138 118 Z" fill="#7dd3fc" stroke="#0f172a" stroke-width="2.2"/>
+                            <!-- طفلان داخل الزجاج الأمامي (رؤوسهم متصلة بأكتافهم) -->
+                            <g>
+                                <!-- الولد بالقميص الأزرق -->
+                                <path d="M150 116 Q168 104 186 116 Z" fill="#0284c7" stroke="#0f172a" stroke-width="1.8"/>
+                                <circle cx="168" cy="94" r="19" fill="#fed7aa" stroke="#0f172a" stroke-width="2"/>
+                                <path d="M148 92 Q150 68 172 68 Q188 70 188 92 Q178 82 164 84 Q154 86 148 92 Z" fill="#334155" stroke="#0f172a" stroke-width="1.8"/>
+                                <circle cx="161" cy="94" r="2.2" fill="#0f172a"/><circle cx="175" cy="94" r="2.2" fill="#0f172a"/>
+                                <path d="M162 102 Q168 109 174 102 Z" fill="#f43f5e" stroke="#0f172a" stroke-width="1.5"/>
+                                <!-- البنت ذات الشعر الأشقر -->
+                                <path d="M196 114 Q214 104 232 114 Z" fill="#facc15" stroke="#0f172a" stroke-width="1.8"/>
+                                <circle cx="214" cy="96" r="18" fill="#fed7aa" stroke="#0f172a" stroke-width="2"/>
+                                <path d="M195 96 Q196 74 216 74 Q233 76 233 98 Q222 86 208 88 Q199 90 195 96 Z" fill="#f59e0b" stroke="#0f172a" stroke-width="1.8"/>
+                                <circle cx="207" cy="96" r="2.2" fill="#0f172a"/><circle cx="221" cy="96" r="2.2" fill="#0f172a"/>
+                                <path d="M208 104 Q214 110 220 104 Z" fill="#f43f5e" stroke="#0f172a" stroke-width="1.5"/>
+                            </g>
+                            <!-- مقدمة الحافلة والشبك والمصابيح والصدام -->
+                            <path d="M142 124 Q194 108 246 122 L252 164 L164 176 Z" fill="#facc15" stroke="#0f172a" stroke-width="2.2"/>
+                            <rect x="184" y="128" width="46" height="34" rx="6" fill="#475569" stroke="#0f172a" stroke-width="2"/>
+                            <line x1="188" y1="136" x2="226" y2="136" stroke="#cbd5e1" stroke-width="2.5"/>
+                            <line x1="188" y1="144" x2="226" y2="144" stroke="#cbd5e1" stroke-width="2.5"/>
+                            <line x1="188" y1="152" x2="226" y2="152" stroke="#cbd5e1" stroke-width="2.5"/>
+                            <circle cx="170" cy="150" r="7" fill="#f1f5f9" stroke="#0f172a" stroke-width="1.8"/>
+                            <circle cx="242" cy="148" r="7" fill="#f1f5f9" stroke="#0f172a" stroke-width="1.8"/>
+                            <path d="M158 172 L262 162 L262 176 L160 186 Z" fill="#94a3b8" stroke="#0f172a" stroke-width="2"/>
+                            <rect x="204" y="168" width="28" height="12" rx="2" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+                        </g>
+                        <!-- طفلان يصعدان من باب الحافلة الأيسر -->
+                        <g>
+                            <!-- البنت الخلفية بالقميص المخطط والحقيبة الحمراء -->
+                            <ellipse cx="32" cy="96" rx="10" ry="7" fill="#78350f" stroke="#0f172a" stroke-width="1.8"/>
+                            <rect x="74" y="106" width="12" height="22" rx="5" fill="#ef4444" stroke="#0f172a" stroke-width="1.8"/>
+                            <rect x="82" y="106" width="20" height="24" rx="5" fill="#fb923c" stroke="#0f172a" stroke-width="1.8"/>
+                            <line x1="82" y1="113" x2="102" y2="113" stroke="#ef4444" stroke-width="2.5"/>
+                            <line x1="82" y1="120" x2="102" y2="120" stroke="#ef4444" stroke-width="2.5"/>
+                            <rect x="84" y="130" width="18" height="12" rx="3" fill="#d97706" stroke="#0f172a" stroke-width="1.8"/>
+                            <rect x="86" y="142" width="6" height="14" fill="#fed7aa" stroke="#0f172a" stroke-width="1.5"/>
+                            <ellipse cx="89" cy="158" rx="6" ry="3.5" fill="#92400e" stroke="#0f172a" stroke-width="1.5"/>
+                            <path d="M82 114 L52 108 L50 114 L82 120 Z" fill="#fed7aa" stroke="#0f172a" stroke-width="1.5"/>
+                            <circle cx="88" cy="92" r="19" fill="#fed7aa" stroke="#0f172a" stroke-width="2"/>
+                            <path d="M68 92 Q68 70 88 70 Q106 70 106 90 Q96 80 82 82 Q74 84 68 92 Z" fill="#78350f" stroke="#0f172a" stroke-width="1.8"/>
+                            <circle cx="81" cy="93" r="2.2" fill="#0f172a"/><circle cx="95" cy="93" r="2.2" fill="#0f172a"/>
+                            <path d="M83 101 Q89 107 95 101 Z" fill="#f43f5e" stroke="#0f172a" stroke-width="1.5"/>
+
+                            <!-- الولد الأمامي بالقميص الأصفر والحقيبة الزرقاء -->
+                            <ellipse cx="104" cy="116" rx="10" ry="15" fill="#0284c7" stroke="#0f172a" stroke-width="2"/>
+                            <path d="M110 104 L138 104 L144 128 L108 128 Z" fill="#fde047" stroke="#0f172a" stroke-width="2"/>
+                            <path d="M108 128 L138 128 L134 146 L112 146 Z" fill="#78350f" stroke="#0f172a" stroke-width="2"/>
+                            <rect x="112" y="146" width="8" height="14" fill="#fed7aa" stroke="#0f172a" stroke-width="1.6"/>
+                            <ellipse cx="115" cy="162" rx="7" ry="4" fill="#334155" stroke="#0f172a" stroke-width="1.6"/>
+                            <circle cx="124" cy="88" r="21" fill="#fed7aa" stroke="#0f172a" stroke-width="2"/>
+                            <path d="M102 86 Q104 62 126 62 Q145 64 145 86 Q134 74 118 76 Q108 78 102 86 Z" fill="#92400e" stroke="#0f172a" stroke-width="1.8"/>
+                            <circle cx="117" cy="88" r="2.3" fill="#0f172a"/><circle cx="132" cy="88" r="2.3" fill="#0f172a"/>
+                            <path d="M119 97 Q125 104 131 97 Z" fill="#f43f5e" stroke="#0f172a" stroke-width="1.5"/>
+                        </g>
+                    </svg>
+                </div>`
+            },
+            {
+                num: 7,
+                phrase: "comic book",
+                hint: "c_ _ _ _  b_ _ _",
+                arabic: "كتاب مصور (مجلة قصص)",
+                solvedByDefault: false,
+                svg: `<div class="w-full h-36 sm:h-40 bg-white flex items-center justify-center overflow-hidden">
+                    <img src="image_58fbf2.png" alt="comic book" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" class="w-full h-full object-contain bg-white block mx-auto">
+                    <svg viewBox="0 0 240 230" style="display:none;" class="w-full h-full bg-white">
+                        <!-- الخلفية الزرقاء الناعمة -->
+                        <path d="M40 30 Q95 8 165 26 Q222 44 218 115 Q214 188 158 210 Q95 228 45 196 Q14 166 20 96 Q24 44 40 30 Z" fill="#bae6fd"/>
+                        <!-- الرداء الأخضر خلف البنت -->
+                        <path d="M74 140 L56 196 Q90 212 120 202 Q156 212 194 208 L172 138 Z" fill="#15803d" stroke="#14532d" stroke-width="1.5"/>
+                        <!-- الضفائر الشقراء والفيونكات الزرقاء -->
+                        <g>
+                            <path d="M84 36 Q56 32 58 64 Q58 84 48 88 Q66 94 78 76 Z" fill="#facc15" stroke="#ca8a04" stroke-width="1.5"/>
+                            <path d="M156 36 Q184 32 182 64 Q182 84 192 88 Q174 94 162 76 Z" fill="#facc15" stroke="#ca8a04" stroke-width="1.5"/>
+                            <path d="M78 44 L106 30 L112 38 L82 54 Z" fill="#7dd3fc" stroke="#0284c7" stroke-width="1.5"/>
+                            <path d="M162 44 L134 30 L128 38 L158 54 Z" fill="#7dd3fc" stroke="#0284c7" stroke-width="1.5"/>
+                        </g>
+                        <!-- الوجه والشعر والقناع الأحمر -->
+                        <g>
+                            <ellipse cx="78" cy="96" rx="6" ry="10" fill="#fed7aa" stroke="#d97706" stroke-width="1.2"/>
+                            <ellipse cx="162" cy="96" rx="6" ry="10" fill="#fed7aa" stroke="#d97706" stroke-width="1.2"/>
+                            <path d="M80 86 Q80 34 120 34 Q160 34 160 86 Q160 124 120 126 Q80 124 80 86 Z" fill="#fed7aa" stroke="#d97706" stroke-width="1.2"/>
+                            <path d="M78 86 Q76 34 120 32 Q164 34 162 86 Q152 58 120 56 Q88 58 78 86 Z" fill="#facc15" stroke="#ca8a04" stroke-width="1.5"/>
+                            <!-- القناع الأحمر -->
+                            <path d="M84 84 Q102 74 120 82 Q138 74 156 84 Q158 98 140 100 Q126 100 120 92 Q114 100 100 100 Q82 98 84 84 Z" fill="#b91c1c" stroke="#7f1d1d" stroke-width="1.5"/>
+                            <ellipse cx="102" cy="89" rx="9" ry="7" fill="#ffffff"/>
+                            <circle cx="103" cy="89" r="5" fill="#0284c7"/>
+                            <circle cx="103" cy="89" r="2.5" fill="#0f172a"/>
+                            <circle cx="105" cy="87" r="1.5" fill="#ffffff"/>
+                            <ellipse cx="138" cy="89" rx="9" ry="7" fill="#ffffff"/>
+                            <circle cx="137" cy="89" r="5" fill="#0284c7"/>
+                            <circle cx="137" cy="89" r="2.5" fill="#0f172a"/>
+                            <circle cx="139" cy="87" r="1.5" fill="#ffffff"/>
+                            <!-- الابتسامة -->
+                            <path d="M106 108 Q120 112 134 108 Q130 119 120 119 Q110 119 106 108 Z" fill="#e11d48"/>
+                            <path d="M108 109 Q120 111 132 109 Q129 113 120 113 Q111 113 108 109 Z" fill="#ffffff"/>
+                        </g>
+                        <!-- الجسم والساقان والحذاء البرتقالي -->
+                        <g>
+                            <path d="M74 134 L162 134 L164 176 L76 176 Z" fill="#f97316"/>
+                            <ellipse cx="116" cy="182" rx="44" ry="20" fill="#451a03"/>
+                            <ellipse cx="96" cy="172" rx="18" ry="26" transform="rotate(-15 96 172)" fill="#5c2408"/>
+                            <rect x="90" y="194" width="16" height="14" fill="#ffffff"/>
+                            <rect x="66" y="192" width="32" height="20" rx="9" fill="#ea580c" stroke="#9a3412" stroke-width="1.5"/>
+                            <line x1="78" y1="196" x2="88" y2="208" stroke="#ffffff" stroke-width="1.8"/>
+                            <line x1="88" y1="196" x2="78" y2="208" stroke="#ffffff" stroke-width="1.8"/>
+                        </g>
+                        <!-- الكتاب المصور الأزرق READ! واليدان -->
+                        <g>
+                            <polygon points="62,106 116,126 116,174 72,152" fill="#0284c7" stroke="#0369a1" stroke-width="1.5"/>
+                            <polygon points="170,116 116,126 116,174 166,154" fill="#0284c7" stroke="#0369a1" stroke-width="1.5"/>
+                            <polygon points="68,108 116,124 164,116 116,128" fill="#f8fafc"/>
+                            <!-- شارة READ! الصفراء والخضراء -->
+                            <polygon points="134,132 146,124 152,132 162,126 158,144 146,152 136,146" fill="#22c55e" stroke="#14532d" stroke-width="1"/>
+                            <text x="148" y="142" font-family="Fredoka, sans-serif" font-size="11" font-weight="bold" fill="#facc15" stroke="#0f172a" stroke-width="0.6" transform="rotate(-12 148 142)" text-anchor="middle">READ!</text>
+                            <!-- اليدان تمسكان الكتاب -->
+                            <circle cx="72" cy="126" r="8" fill="#fed7aa" stroke="#d97706" stroke-width="1.2"/>
+                            <circle cx="122" cy="148" r="9" fill="#fed7aa" stroke="#d97706" stroke-width="1.2"/>
+                        </g>
+                    </svg>
+                </div>`
+            },
+            {
+                num: 8,
+                phrase: "get off the bus",
+                hint: "g_ _  o_ _  the bus",
+                arabic: "ينزل من الحافلة",
+                solvedByDefault: false,
+                svg: `<div class="w-full h-36 sm:h-40 bg-white flex items-center justify-center overflow-hidden">
+                    <img src="image_590356.png" alt="get off the bus" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" class="w-full h-full object-contain bg-white block mx-auto">
+                    <svg viewBox="0 0 320 210" style="display:none;" class="w-full h-full bg-white">
+                        <!-- ظل الأرضية -->
+                        <ellipse cx="222" cy="196" rx="68" ry="6" fill="#e2e8f0"/>
+                        <ellipse cx="86" cy="186" rx="58" ry="5" fill="#e2e8f0"/>
+                        <!-- الحافلة المدرسية الصفراء -->
+                        <g>
+                            <!-- العجلات -->
+                            <rect x="174" y="174" width="22" height="20" rx="5" fill="#0f172a"/>
+                            <rect x="248" y="174" width="22" height="20" rx="5" fill="#0f172a"/>
+                            <!-- السقف البرتقالي -->
+                            <rect x="180" y="20" width="84" height="10" rx="4" fill="#ea580c"/>
+                            <!-- المرايا الجانبية -->
+                            <path d="M164 52 L152 52 L152 72" fill="none" stroke="#b45309" stroke-width="3.5" stroke-linecap="round"/>
+                            <rect x="146" y="66" width="11" height="24" rx="4" fill="#facc15"/>
+                            <path d="M280 52 L292 52 L292 72" fill="none" stroke="#b45309" stroke-width="3.5" stroke-linecap="round"/>
+                            <rect x="287" y="66" width="11" height="24" rx="4" fill="#facc15"/>
+                            <!-- إشارة STOP -->
+                            <rect x="280" y="128" width="12" height="5" fill="#78350f"/>
+                            <polygon points="296,118 308,118 315,125 315,137 308,144 296,144 289,137 289,125" fill="#dc2626" stroke="#ffffff" stroke-width="1.5"/>
+                            <text x="302" y="134" font-family="Fredoka, sans-serif" font-size="7.5" font-weight="bold" fill="#ffffff" text-anchor="middle">STOP</text>
+                            <!-- هيكل الحافلة -->
+                            <rect x="164" y="28" width="116" height="146" rx="14" fill="#facc15"/>
+                            <!-- لافتة SCHOOL BUS والأضواء -->
+                            <rect x="192" y="34" width="60" height="14" rx="4" fill="#ffffff"/>
+                            <text x="222" y="44" font-family="Fredoka, sans-serif" font-size="8.5" font-weight="bold" fill="#1e293b" text-anchor="middle">SCHOOL BUS</text>
+                            <circle cx="176" cy="41" r="4" fill="#dc2626"/><circle cx="186" cy="41" r="4" fill="#dc2626"/>
+                            <circle cx="258" cy="41" r="4" fill="#dc2626"/><circle cx="268" cy="41" r="4" fill="#dc2626"/>
+                            <!-- الزجاج الأمامي -->
+                            <rect x="174" y="54" width="96" height="56" rx="6" fill="#bae6fd"/>
+                            <rect x="174" y="54" width="96" height="7" fill="#0369a1"/>
+                            <!-- مقاعد الحافلة والسائق -->
+                            <rect x="178" y="92" width="36" height="18" rx="4" fill="#3b82f6"/>
+                            <rect x="228" y="92" width="38" height="18" rx="4" fill="#ea580c"/>
+                            <!-- السائق يلوّح بيده -->
+                            <path d="M226 110 Q242 94 260 110 Z" fill="#2563eb"/>
+                            <path d="M234 110 Q244 100 254 110" fill="none" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/>
+                            <path d="M228 102 L218 88 L223 85 L233 98 Z" fill="#fed7aa"/>
+                            <circle cx="218" cy="84" r="5" fill="#fed7aa"/>
+                            <circle cx="244" cy="80" r="14" fill="#fed7aa"/>
+                            <path d="M230 76 Q234 58 250 62 L256 58 L258 76 Q248 68 236 72 Z" fill="#92400e"/>
+                            <circle cx="239" cy="80" r="1.8" fill="#1e293b"/><circle cx="249" cy="80" r="1.8" fill="#1e293b"/>
+                            <path d="M240 86 Q244 91 248 86 Z" fill="#e11d48"/>
+                            <!-- المصابيح والشبك والصدام -->
+                            <circle cx="184" cy="134" r="10" fill="#7dd3fc" stroke="#ffffff" stroke-width="2.5"/>
+                            <circle cx="260" cy="134" r="10" fill="#7dd3fc" stroke="#ffffff" stroke-width="2.5"/>
+                            <path d="M204 148 L204 130 Q222 120 240 130 L240 148 Z" fill="#ffffff"/>
+                            <path d="M207 148 L207 132 Q222 124 237 132 L237 148 Z" fill="#78350f"/>
+                            <line x1="213" y1="128" x2="213" y2="148" stroke="#ffffff" stroke-width="2"/>
+                            <line x1="219" y1="126" x2="219" y2="148" stroke="#ffffff" stroke-width="2"/>
+                            <line x1="225" y1="126" x2="225" y2="148" stroke="#ffffff" stroke-width="2"/>
+                            <line x1="231" y1="128" x2="231" y2="148" stroke="#ffffff" stroke-width="2"/>
+                            <rect x="160" y="156" width="124" height="16" rx="4" fill="#c2410c"/>
+                            <rect x="208" y="158" width="28" height="12" rx="3" fill="#e2e8f0" stroke="#475569" stroke-width="1.5"/>
+                        </g>
+                        <!-- 3 أطفال ينزلون ويركضون بسعادة نحو اليسار -->
+                        <g>
+                            <!-- الطفل الأول (يسار - قميص أزرق بنجمة) -->
+                            <rect x="26" y="132" width="18" height="22" rx="4" fill="#0284c7"/>
+                            <polygon points="35,137 37,141 41,141 38,144 39,148 35,145 31,148 32,144 29,141 33,141" fill="#bae6fd"/>
+                            <rect x="27" y="154" width="7" height="22" fill="#78350f"/>
+                            <rect x="36" y="154" width="7" height="20" fill="#78350f"/>
+                            <ellipse cx="29" cy="178" rx="6" ry="3" fill="#dc2626"/>
+                            <ellipse cx="41" cy="176" rx="6" ry="3" fill="#dc2626"/>
+                            <path d="M26 136 L14 130 L16 125 L28 132 Z" fill="#fed7aa"/>
+                            <path d="M44 136 L56 130 L54 125 L42 132 Z" fill="#fed7aa"/>
+                            <circle cx="35" cy="118" r="14" fill="#fed7aa"/>
+                            <path d="M21 116 Q23 98 40 100 L44 96 L48 112 Q36 104 24 114 Z" fill="#991b1b"/>
+                            <circle cx="31" cy="118" r="2" fill="#1e293b"/><circle cx="40" cy="118" r="2" fill="#1e293b"/>
+                            <path d="M32 124 Q36 129 40 124 Z" fill="#e11d48"/>
+
+                            <!-- البنت الوسطى (قميص برتقالي وأوفرول أزرق) -->
+                            <rect x="76" y="132" width="18" height="12" rx="3" fill="#f59e0b"/>
+                            <rect x="76" y="142" width="18" height="14" rx="3" fill="#1e3a8a"/>
+                            <rect x="77" y="156" width="6" height="18" fill="#fed7aa"/>
+                            <path d="M88 156 L96 168 L91 171 L84 158 Z" fill="#fed7aa"/>
+                            <ellipse cx="78" cy="176" rx="6" ry="3" fill="#06b6d4"/>
+                            <ellipse cx="95" cy="171" rx="6" ry="3" fill="#06b6d4"/>
+                            <path d="M76 136 L64 128 L67 124 L78 132 Z" fill="#fed7aa"/>
+                            <path d="M94 136 L106 138 L105 143 L93 140 Z" fill="#fed7aa"/>
+                            <path d="M68 118 Q68 98 85 98 Q102 98 102 126 L68 126 Z" fill="#78350f"/>
+                            <circle cx="85" cy="117" r="13.5" fill="#fed7aa"/>
+                            <circle cx="80" cy="117" r="2" fill="#1e293b"/><circle cx="90" cy="117" r="2" fill="#1e293b"/>
+                            <path d="M81 123 Q85 128 89 123 Z" fill="#e11d48"/>
+
+                            <!-- الطفل الثالث (يمين - شعر برتقالي وقميص أزرق) -->
+                            <rect x="128" y="132" width="18" height="20" rx="4" fill="#0ea5e9"/>
+                            <rect x="128" y="138" width="18" height="5" fill="#bae6fd"/>
+                            <rect x="130" y="152" width="7" height="22" fill="#1e3a8a"/>
+                            <path d="M140 152 L152 162 L148 166 L137 156 Z" fill="#1e3a8a"/>
+                            <ellipse cx="131" cy="176" rx="6" ry="3" fill="#dc2626"/>
+                            <ellipse cx="152" cy="165" rx="6" ry="3" fill="#dc2626"/>
+                            <path d="M128 138 L114 142 L115 147 L129 142 Z" fill="#fed7aa"/>
+                            <path d="M146 136 L158 126 L161 130 L148 140 Z" fill="#fed7aa"/>
+                            <circle cx="137" cy="117" r="14" fill="#fed7aa"/>
+                            <path d="M122 115 Q122 96 138 96 Q152 96 152 115 Q142 104 130 106 Z" fill="#ea580c"/>
+                            <circle cx="132" cy="117" r="2" fill="#16a34a"/><circle cx="142" cy="117" r="2" fill="#16a34a"/>
+                            <path d="M133 123 Q137 128 141 123 Z" fill="#e11d48"/>
+                        </g>
+                    </svg>
+                </div>`
+            },
+            {
+                num: 9,
+                phrase: "grandparents",
+                hint: "g_ _ _ _ _ _ _ _ _ _ _",
+                arabic: "الأجداد (الجد والجدة)",
+                solvedByDefault: false,
+                svg: `<div class="w-full h-36 sm:h-40 bg-white flex items-center justify-center overflow-hidden">
+                    <img src="image_597bb0.png" alt="grandparents" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" class="w-full h-full object-contain bg-white block mx-auto">
+                    <svg viewBox="0 0 260 220" style="display:none;" class="w-full h-full bg-white">
+                        <!-- الجدة (يسار) -->
+                        <g>
+                            <!-- الحذاء والتنورة -->
+                            <ellipse cx="64" cy="196" rx="10" ry="5" fill="#0d9488" stroke="#1e293b" stroke-width="1.8"/>
+                            <ellipse cx="86" cy="196" rx="10" ry="5" fill="#0d9488" stroke="#1e293b" stroke-width="1.8"/>
+                            <rect x="60" y="182" width="7" height="12" fill="#fed7aa"/>
+                            <rect x="82" y="182" width="7" height="12" fill="#fed7aa"/>
+                            <path d="M52 146 L98 146 L94 184 L56 184 Z" fill="#8d6e63" stroke="#1e293b" stroke-width="2"/>
+                            <!-- السترة التركوازية المنقوشة -->
+                            <path d="M46 102 Q74 92 102 102 L106 154 L44 154 Z" fill="#2a9d8f" stroke="#1e293b" stroke-width="2"/>
+                            <path d="M68 100 L82 100 L78 130 L72 130 Z" fill="#facc15"/>
+                            <path d="M48 118 L100 118 M46 134 L102 134" stroke="#facc15" stroke-width="2" stroke-dasharray="4 3"/>
+                            <!-- الرأس والشعر الأبيض والنظارة -->
+                            <circle cx="58" cy="40" r="13" fill="#f1f5f9" stroke="#1e293b" stroke-width="2"/>
+                            <circle cx="74" cy="74" r="28" fill="#fed7aa" stroke="#1e293b" stroke-width="2"/>
+                            <path d="M46 74 Q44 42 76 42 Q104 44 102 74 Q94 56 76 58 Q56 58 46 74 Z" fill="#f1f5f9" stroke="#1e293b" stroke-width="2"/>
+                            <!-- زهرة الشعر -->
+                            <circle cx="57" cy="53" r="5" fill="#f87171" stroke="#1e293b" stroke-width="1.4"/>
+                            <circle cx="53" cy="61" r="4" fill="#38bdf8" stroke="#1e293b" stroke-width="1.4"/>
+                            <!-- نظارة وابتسامة الجدة -->
+                            <circle cx="67" cy="74" r="9" fill="none" stroke="#1e293b" stroke-width="1.8"/>
+                            <circle cx="88" cy="76" r="9" fill="none" stroke="#1e293b" stroke-width="1.8"/>
+                            <line x1="76" y1="75" x2="79" y2="75" stroke="#1e293b" stroke-width="1.8"/>
+                            <path d="M63 73 Q67 69 71 73" fill="none" stroke="#1e293b" stroke-width="1.8" stroke-linecap="round"/>
+                            <path d="M84 75 Q88 71 92 75" fill="none" stroke="#1e293b" stroke-width="1.8" stroke-linecap="round"/>
+                            <path d="M72 87 Q78 92 84 87" fill="none" stroke="#1e293b" stroke-width="1.8" stroke-linecap="round"/>
+                        </g>
+                        <!-- الجد (يمين) -->
+                        <g>
+                            <!-- الحذاء والبنطال -->
+                            <ellipse cx="182" cy="196" rx="12" ry="5" fill="#5c4033" stroke="#1e293b" stroke-width="1.8"/>
+                            <ellipse cx="208" cy="196" rx="12" ry="5" fill="#5c4033" stroke="#1e293b" stroke-width="1.8"/>
+                            <path d="M174 146 L218 146 L216 193 L198 193 L196 164 L192 193 L176 193 Z" fill="#8d6e63" stroke="#1e293b" stroke-width="2"/>
+                            <!-- الكنزة الزرقاء بخط برتقالي -->
+                            <path d="M164 102 Q194 92 222 102 L224 150 L164 150 Z" fill="#3b82f6" stroke="#1e293b" stroke-width="2"/>
+                            <rect x="165" y="118" width="58" height="8" fill="#f59e0b"/>
+                            <!-- الرأس والشعر الرمادي والنظارة -->
+                            <circle cx="192" cy="72" r="29" fill="#fed7aa" stroke="#1e293b" stroke-width="2"/>
+                            <path d="M163 68 Q163 38 194 38 Q222 40 221 68 Q210 54 192 54 Q174 54 163 68 Z" fill="#cbd5e1" stroke="#1e293b" stroke-width="2"/>
+                            <rect x="172" y="68" width="17" height="13" rx="4" fill="none" stroke="#1e293b" stroke-width="1.8"/>
+                            <rect x="195" y="68" width="17" height="13" rx="4" fill="none" stroke="#1e293b" stroke-width="1.8"/>
+                            <line x1="189" y1="74" x2="195" y2="74" stroke="#1e293b" stroke-width="1.8"/>
+                            <path d="M176 74 Q180 70 184 74" fill="none" stroke="#1e293b" stroke-width="1.8" stroke-linecap="round"/>
+                            <path d="M199 74 Q203 70 207 74" fill="none" stroke="#1e293b" stroke-width="1.8" stroke-linecap="round"/>
+                            <path d="M184 85 Q192 92 200 85" fill="none" stroke="#1e293b" stroke-width="1.8" stroke-linecap="round"/>
+                        </g>
+                        <!-- الحفيدة والحفيد في المنتصف -->
+                        <g>
+                            <!-- الحفيدة (فستان وردي) -->
+                            <ellipse cx="106" cy="196" rx="8" ry="4" fill="#f43f5e" stroke="#1e293b" stroke-width="1.6"/>
+                            <ellipse cx="126" cy="192" rx="8" ry="4" fill="#f43f5e" stroke="#1e293b" stroke-width="1.6"/>
+                            <rect x="103" y="180" width="5" height="13" fill="#ffffff"/>
+                            <path d="M118 178 L124 189 L128 187 L122 176 Z" fill="#ffffff"/>
+                            <path d="M98 140 L122 140 L126 180 L94 180 Z" fill="#fb7185" stroke="#1e293b" stroke-width="1.8"/>
+                            <circle cx="132" cy="134" r="7" fill="#78350f" stroke="#1e293b" stroke-width="1.6"/>
+                            <circle cx="110" cy="122" r="18" fill="#fed7aa" stroke="#1e293b" stroke-width="1.8"/>
+                            <path d="M92 120 Q94 100 112 100 Q128 102 128 120 Q118 112 106 114 Z" fill="#78350f" stroke="#1e293b" stroke-width="1.8"/>
+                            <circle cx="122" cy="105" r="4.5" fill="#fb7185" stroke="#1e293b" stroke-width="1.4"/>
+                            <path d="M101 121 Q104 118 107 121" fill="none" stroke="#1e293b" stroke-width="1.6" stroke-linecap="round"/>
+                            <path d="M113 121 Q116 118 119 121" fill="none" stroke="#1e293b" stroke-width="1.6" stroke-linecap="round"/>
+                            <path d="M106 128 Q110 132 114 128" fill="none" stroke="#1e293b" stroke-width="1.6" stroke-linecap="round"/>
+                            <!-- ذراع الجدة تعانق الحفيدة -->
+                            <path d="M46 112 Q52 148 84 148" fill="none" stroke="#2a9d8f" stroke-width="11" stroke-linecap="round"/>
+                            <circle cx="86" cy="148" r="5" fill="#fed7aa" stroke="#1e293b" stroke-width="1.5"/>
+
+                            <!-- الحفيد (قميص أخضر مخطط وبنطال أزرق) -->
+                            <ellipse cx="148" cy="196" rx="8" ry="4" fill="#16a34a" stroke="#1e293b" stroke-width="1.6"/>
+                            <ellipse cx="166" cy="196" rx="8" ry="4" fill="#16a34a" stroke="#1e293b" stroke-width="1.6"/>
+                            <path d="M144 166 L168 166 L168 193 L158 193 L156 178 L154 193 L144 193 Z" fill="#0284c7" stroke="#1e293b" stroke-width="1.8"/>
+                            <rect x="142" y="140" width="28" height="26" rx="4" fill="#22c55e" stroke="#1e293b" stroke-width="1.8"/>
+                            <line x1="143" y1="147" x2="169" y2="147" stroke="#bbf7d0" stroke-width="2.2"/>
+                            <line x1="143" y1="154" x2="169" y2="154" stroke="#bbf7d0" stroke-width="2.2"/>
+                            <line x1="143" y1="161" x2="169" y2="161" stroke="#bbf7d0" stroke-width="2.2"/>
+                            <circle cx="156" cy="120" r="18" fill="#fed7aa" stroke="#1e293b" stroke-width="1.8"/>
+                            <path d="M138 118 Q140 98 158 98 Q174 100 174 118 Q164 110 152 112 Z" fill="#78350f" stroke="#1e293b" stroke-width="1.8"/>
+                            <path d="M147 119 Q150 116 153 119" fill="none" stroke="#1e293b" stroke-width="1.6" stroke-linecap="round"/>
+                            <path d="M159 119 Q162 116 165 119" fill="none" stroke="#1e293b" stroke-width="1.6" stroke-linecap="round"/>
+                            <path d="M151 125 Q156 132 161 125 Z" fill="#f43f5e" stroke="#1e293b" stroke-width="1.4"/>
+                            <!-- ذراع الجد تعانق الحفيد -->
+                            <path d="M220 112 Q212 146 174 146" fill="none" stroke="#3b82f6" stroke-width="11" stroke-linecap="round"/>
+                            <circle cx="172" cy="146" r="5" fill="#fed7aa" stroke="#1e293b" stroke-width="1.5"/>
+                        </g>
+                    </svg>
+                </div>`
+            },
+            {
+                num: 10,
+                phrase: "get undressed",
+                hint: "g_ _  u_ _ _ _ _ _ _ _",
+                arabic: "يخلع ملابسه (قبل النوم)",
+                solvedByDefault: false,
+                svg: `<div class="w-full h-36 sm:h-40 bg-white flex items-center justify-center overflow-hidden">
+                    <img src="image_597f14.png" alt="get undressed" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" class="w-full h-full object-contain bg-white block mx-auto">
+                    <svg viewBox="0 0 220 220" style="display:none;" class="w-full h-full bg-white">
+                        <!-- السهم الأحمر للأعلى -->
+                        <g>
+                            <polygon points="154,68 138,98 148,98 148,144 160,144 160,98 170,98" fill="#ef4444" stroke="#0f172a" stroke-width="2" stroke-linejoin="round"/>
+                        </g>
+                        <!-- الولد يخلع قميصه الأزرق -->
+                        <g>
+                            <!-- الجوارب البيضاء والأقدام -->
+                            <path d="M76 196 L64 202 Q60 206 66 208 L88 208 L88 196 Z" fill="#f8fafc" stroke="#0f172a" stroke-width="1.8"/>
+                            <path d="M102 196 L102 208 L124 208 Q130 206 126 202 L114 196 Z" fill="#f8fafc" stroke="#0f172a" stroke-width="1.8"/>
+                            <!-- الساقان -->
+                            <rect x="76" y="164" width="12" height="32" fill="#e5b899" stroke="#0f172a" stroke-width="1.8"/>
+                            <rect x="102" y="164" width="12" height="32" fill="#e5b899" stroke="#0f172a" stroke-width="1.8"/>
+                            <!-- الشورت الرمادي -->
+                            <path d="M74 122 L116 122 L120 166 L98 166 L95 148 L92 166 L70 166 Z" fill="#9ca3af" stroke="#0f172a" stroke-width="2" stroke-linejoin="round"/>
+                            <!-- الجذع والذراعان المرفوعتان -->
+                            <path d="M74 122 L76 74 L64 38 L86 14 L92 20 L74 40 L84 68 L106 68 L118 42 L134 26 L140 32 L124 54 L114 78 L116 122 Z" fill="#e5b899" stroke="#0f172a" stroke-width="2" stroke-linejoin="round"/>
+                            <!-- اليد اليمنى الممدودة للأعلى -->
+                            <path d="M134 26 L138 14 L142 24 L147 13 L149 25 L155 16 L154 28 L159 22 L155 34 L142 36 Z" fill="#e5b899" stroke="#0f172a" stroke-width="1.6"/>
+                            <!-- الرأس والشعر الأسود -->
+                            <path d="M78 44 Q74 24 94 20 Q114 20 114 42 Q108 32 94 32 Q84 32 78 44 Z" fill="#0f172a"/>
+                            <ellipse cx="96" cy="46" rx="17" ry="20" fill="#e5b899" stroke="#0f172a" stroke-width="2"/>
+                            <path d="M79 44 Q76 22 96 20 Q112 20 112 36 Q100 28 86 34 Q82 40 79 44 Z" fill="#0f172a"/>
+                            <!-- ملامح الوجه -->
+                            <circle cx="90" cy="44" r="1.8" fill="#0f172a"/>
+                            <circle cx="101" cy="44" r="1.8" fill="#0f172a"/>
+                            <path d="M94 49 Q96 47 98 49" fill="none" stroke="#0f172a" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M90 54 Q96 60 102 54" fill="none" stroke="#0f172a" stroke-width="1.8" stroke-linecap="round"/>
+                            <!-- القميص الأزرق المرفوع فوق الرأس -->
+                            <path d="M92 14 Q112 8 134 24 L144 36 L136 44 L134 54 L124 68 L120 46 L112 32 Q102 22 92 14 Z" fill="#67e8f9" stroke="#0f172a" stroke-width="1.8" stroke-linejoin="round"/>
+                            <ellipse cx="116" cy="20" rx="11" ry="5" transform="rotate(24 116 20)" fill="#0284c7" stroke="#0f172a" stroke-width="1.5"/>
+                        </g>
+                    </svg>
+                </div>`
+            },
+            {
+                num: 11,
+                phrase: "leaves",
+                hint: "l_ _ _ _ _",
+                arabic: "أوراق الشجر",
+                solvedByDefault: false,
+                svg: `<div class="w-full h-36 sm:h-40 bg-white flex items-center justify-center overflow-hidden">
+                    <img src="image_59d686.png" alt="leaves" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" class="w-full h-full object-contain bg-white block mx-auto">
+                    <svg viewBox="0 0 220 220" style="display:none;" class="w-full h-full bg-white">
+                        <!-- الهالة الخلفية الناعمة لأوراق الشجر -->
+                        <path d="M42 74 Q36 42 72 44 Q86 18 112 32 Q144 22 164 46 Q192 48 184 82 Q204 114 176 146 Q184 182 142 184 Q112 204 76 188 Q44 184 48 148 Q24 116 42 74 Z" fill="#f3e8e2" opacity="0.75"/>
+                        <!-- أوراق خلفية صغيرة ومتناثرة -->
+                        <ellipse cx="64" cy="36" rx="8" ry="12" transform="rotate(-15 64 36)" fill="#e7a583"/>
+                        <path d="M64 26 L64 46 M60 33 L64 36 L68 33" stroke="#9a5b40" stroke-width="1.2" fill="none"/>
+                        <ellipse cx="22" cy="118" rx="5" ry="9" transform="rotate(-35 22 118)" fill="#a3c4a8"/>
+                        <ellipse cx="26" cy="138" rx="5" ry="9" transform="rotate(-20 26 138)" fill="#f4b158"/>
+                        <ellipse cx="196" cy="102" rx="5" ry="9" transform="rotate(25 196 102)" fill="#f8c858"/>
+                        <ellipse cx="196" cy="122" rx="5" ry="9" transform="rotate(35 196 122)" fill="#e06d44"/>
+                        <!-- أوراق داكنة في الخلفية -->
+                        <path d="M92 78 Q82 44 96 24 Q108 26 108 46 Q120 38 118 62 Q124 72 112 88 Z" fill="#7c3224"/>
+                        <path d="M138 72 Q154 34 178 28 Q186 38 176 52 Q190 50 182 66 Q188 76 170 92 L138 96 Z" fill="#d95338"/>
+                        <path d="M142 76 Q156 46 174 42 L152 88 Z" fill="#b83724" opacity="0.6"/>
+                        <path d="M128 164 Q158 144 184 152 Q188 164 174 170 Q182 182 162 182 Q152 194 128 184 Z" fill="#7a3022"/>
+                        <!-- الورقة البرتقالية الكبيرة (يسار) -->
+                        <path d="M36 52 Q58 46 84 74 Q94 98 76 130 Q52 132 34 106 Q26 78 36 52 Z" fill="#f3a64b"/>
+                        <path d="M36 52 Q32 82 46 108 Q60 128 76 130 Q50 132 32 106 Q26 78 36 52 Z" fill="#e86f4c"/>
+                        <path d="M38 56 Q56 88 78 126" stroke="#b93e28" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+                        <path d="M44 68 L58 64 M50 82 L68 76 M56 96 L74 90 M62 110 L74 106" stroke="#b93e28" stroke-width="1.4" stroke-linecap="round"/>
+                        <!-- الورقة الخضراء الوسطى -->
+                        <path d="M100 44 Q112 32 126 32 Q132 48 142 56 Q148 76 134 94 Q134 114 110 124 Q94 136 74 126 Q72 110 84 102 Q74 84 94 74 Q92 54 100 44 Z" fill="#70a27a"/>
+                        <path d="M126 32 Q132 48 142 56 Q148 76 134 94 Q134 114 110 124 Q116 90 118 40 Z" fill="#5b8e67"/>
+                        <path d="M124 38 Q116 82 104 122" stroke="#365c40" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+                        <path d="M120 56 L104 52 M116 74 L96 70 M112 92 L92 88 M118 68 L134 62 M114 86 L130 80" stroke="#365c40" stroke-width="1.4" stroke-linecap="round"/>
+                        <!-- الورقة الصفراء الكبيرة (يمين) -->
+                        <path d="M184 74 Q164 76 154 92 Q136 86 130 104 Q112 104 112 124 Q98 134 108 152 Q128 166 158 158 Q182 150 182 126 Q190 106 184 74 Z" fill="#fbd266"/>
+                        <path d="M182 78 Q154 114 124 152" stroke="#c88628" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+                        <path d="M168 96 L150 94 M156 112 L134 110 M144 128 L120 128 M164 104 L176 118 M152 120 L168 136" stroke="#c88628" stroke-width="1.4" stroke-linecap="round"/>
+                        <!-- الورقة الحمراء البرتقالية الأمامية (أسفل يسار) -->
+                        <path d="M52 124 Q68 122 80 136 Q90 116 106 132 Q124 122 128 146 Q146 154 136 176 Q132 196 108 192 Q90 206 72 188 Q54 172 52 124 Z" fill="#f15a24"/>
+                        <path d="M52 124 Q56 168 74 186 Q90 202 108 192 Q86 196 68 178 Q54 158 52 124 Z" fill="#d9381e"/>
+                        <path d="M56 128 Q94 162 134 196" stroke="#7c1d12" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+                        <path d="M74 144 L94 138 M88 158 L112 150 M102 172 L126 164 M72 146 L68 166 M88 160 L82 180 M104 174 L98 190" stroke="#7c1d12" stroke-width="1.5" stroke-linecap="round"/>
+                        <!-- نقاط بيضاء زخرفية صغيرة -->
+                        <circle cx="104" cy="84" r="2.2" fill="#ffffff" opacity="0.85"/>
+                        <circle cx="152" cy="112" r="2.5" fill="#ffffff" opacity="0.85"/>
+                        <circle cx="164" cy="126" r="2.2" fill="#ffffff" opacity="0.85"/>
+                        <circle cx="88" cy="166" r="2" fill="#ffffff" opacity="0.85"/>
+                    </svg>
+                </div>`
+            },
+            {
+                num: 12,
+                phrase: "trash can",
+                hint: "t_ _ _ _  c_ _",
+                arabic: "سلة المهملات",
+                solvedByDefault: false,
+                svg: `<div class="w-full h-36 sm:h-40 bg-white flex items-center justify-center overflow-hidden">
+                    <img src="image_59e0d2.png" alt="trash can" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" class="w-full h-full object-contain bg-white block mx-auto">
+                    <svg viewBox="0 0 220 220" style="display:none;" class="w-full h-full bg-white">
+                        <!-- ظل الأرضية وبعض البقايا المتساقطة حول السلة -->
+                        <ellipse cx="110" cy="194" rx="76" ry="12" fill="#f3a678"/>
+                        <path d="M52 192 Q66 184 82 190 Q92 198 70 200 Q50 200 52 192 Z" fill="#f97316" stroke="#3f2e26" stroke-width="1.6"/>
+                        <circle cx="56" cy="182" r="8" fill="#84cc16" stroke="#3f2e26" stroke-width="1.6"/>
+                        <path d="M138 182 Q150 176 160 184 L156 194 Q146 196 138 190 Z" fill="#f87171" stroke="#3f2e26" stroke-width="1.6"/>
+                        <ellipse cx="164" cy="196" rx="10" ry="4" fill="#38bdf8" stroke="#3f2e26" stroke-width="1.4"/>
+                        <!-- محتويات القمامة الملونة أعلى السلة -->
+                        <g stroke="#3f2e26" stroke-width="2" stroke-linejoin="round">
+                            <polygon points="74,46 86,42 90,56 76,60" fill="#84cc16"/>
+                            <circle cx="68" cy="70" r="10" fill="#dc2626"/>
+                            <polygon points="76,72 96,54 106,68 86,84" fill="#a3e635"/>
+                            <polygon points="104,64 130,52 138,76 112,86" fill="#ef4444"/>
+                            <polygon points="62,88 116,74 112,92 66,94" fill="#fbbf24"/>
+                            <path d="M136 62 Q146 50 158 60 L156 76 L134 74 Z" fill="#facc15"/>
+                            <polygon points="116,84 136,76 144,92 120,94" fill="#38bdf8"/>
+                        </g>
+                        <!-- الغطاء المفتوح في الأعلى -->
+                        <path d="M96 42 Q128 16 172 34 L170 46 L96 52 Z" fill="#78716c" stroke="#3f2e26" stroke-width="2.2" stroke-linejoin="round"/>
+                        <path d="M98 48 L170 42 L166 56 L102 58 Z" fill="#57534e" stroke="#3f2e26" stroke-width="2"/>
+                        <!-- جسم سلة المهملات الخضراء -->
+                        <polygon points="58,96 162,96 152,190 68,190" fill="#84cc16" stroke="#3f2e26" stroke-width="2.4" stroke-linejoin="round"/>
+                        <!-- خطوط التضليع العمودية -->
+                        <line x1="82" y1="104" x2="86" y2="184" stroke="#4d7c0f" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="110" y1="104" x2="110" y2="184" stroke="#4d7c0f" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="138" y1="104" x2="134" y2="184" stroke="#4d7c0f" stroke-width="3" stroke-linecap="round"/>
+                        <!-- مقبض السلة الجانبي -->
+                        <path d="M60 118 Q48 118 48 128 Q48 138 61 138" fill="none" stroke="#57534e" stroke-width="4" stroke-linecap="round"/>
+                        <!-- حافة السلة العلوية وبقايا برتقالية متدلية -->
+                        <rect x="54" y="88" width="112" height="11" rx="4" fill="#78716c" stroke="#3f2e26" stroke-width="2.2"/>
+                        <path d="M84 94 Q92 114 98 110 Q102 104 102 94 Z" fill="#f97316" stroke="#3f2e26" stroke-width="1.6"/>
+                        <path d="M126 94 Q132 126 144 122 Q148 110 138 94 Z" fill="#f97316" stroke="#3f2e26" stroke-width="1.6"/>
+                        <!-- نقاط ملونة متطايرة حول السلة -->
+                        <circle cx="48" cy="64" r="3.5" fill="#facc15"/>
+                        <circle cx="92" cy="30" r="3" fill="#84cc16"/>
+                        <circle cx="176" cy="70" r="3" fill="#84cc16"/>
+                        <circle cx="174" cy="116" r="3.5" fill="#84cc16"/>
+                    </svg>
+                </div>`
+            }
+        ];
+
+        const allVocabPhrases = vocabItems.map(item => item.phrase);
+
+        // متغيرات نظام السحب والإفلات لصندوق الكلمات
+        let selectedBankWord = null;
+        let shuffledBankWords = [];
+
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function initWordBank() {
+            const unplaced = vocabItems.filter(item => !item.solvedByDefault).map(item => item.phrase);
+            shuffledBankWords = shuffleArray(unplaced);
+            renderWordBank();
+        }
+
+        function renderWordBank() {
+            const bankEl = document.getElementById('vocab-word-bank');
+            if (!bankEl) return;
+
+            // جمع الكلمات الموضوعة حالياً في البطاقات
+            const placedWords = new Set();
+            vocabItems.forEach(item => {
+                if (!item.solvedByDefault) {
+                    const zone = document.getElementById(`vocab-drop-${item.num}`);
+                    if (zone && zone.dataset.value) {
+                        placedWords.add(zone.dataset.value);
+                    }
+                }
+            });
+
+            bankEl.innerHTML = shuffledBankWords.map(word => {
+                const isUsed = placedWords.has(word);
+                const isSelected = selectedBankWord === word;
+                const chipClasses = [
+                    "word-chip en-text bg-white border-2 border-sky-300 hover:border-sky-500 text-sky-900 font-bold px-3.5 py-1.5 rounded-xl text-sm sm:text-base shadow-sm flex items-center gap-1.5",
+                    isUsed ? "used-chip" : "",
+                    isSelected ? "selected-chip" : ""
+                ].join(" ");
+
+                return `
+                    <div draggable="${!isUsed}"
+                         ondragstart="handleWordDragStart(event, '${word}')"
+                         onclick="handleWordChipClick('${word}')"
+                         class="${chipClasses}">
+                        <i class="fa-solid fa-grip-vertical text-sky-300 text-xs"></i>
+                        <span>${word}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function handleWordDragStart(event, word) {
+            selectedBankWord = word;
+            event.dataTransfer.setData('text/plain', word);
+            event.dataTransfer.effectAllowed = 'move';
+        }
+
+        function handleWordChipClick(word) {
+            if (selectedBankWord === word) {
+                selectedBankWord = null;
+            } else {
+                selectedBankWord = word;
+                speakText(word);
+            }
+            renderWordBank();
+        }
+
+        function handleZoneDragOver(event) {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = 'move';
+            event.currentTarget.classList.add('drag-over');
+        }
+
+        function handleZoneDragLeave(event) {
+            event.currentTarget.classList.remove('drag-over');
+        }
+
+        function handleZoneDrop(event, num) {
+            event.preventDefault();
+            event.currentTarget.classList.remove('drag-over');
+            const word = event.dataTransfer.getData('text/plain') || selectedBankWord;
+            if (!word) return;
+            placeWordInZone(num, word);
+        }
+
+        function handleZoneClick(num) {
+            const zone = document.getElementById(`vocab-drop-${num}`);
+            if (!zone) return;
+
+            // إذا اختار الطالب كلمة من الصندوق ثم ضغط على الخانة
+            if (selectedBankWord) {
+                placeWordInZone(num, selectedBankWord);
+                return;
+            }
+
+            // إذا كانت الخانة مملوءة وضغط عليها الطالب، تعود الكلمة إلى صندوق الكلمات
+            if (zone.dataset.value) {
+                zone.dataset.value = "";
+                zone.innerHTML = `<span class="text-slate-400 text-xs font-medium pointer-events-none">اسحب الكلمة هنا</span>`;
+                zone.className = "drop-zone flex-1 border-2 border-dashed border-slate-300 bg-slate-50/90 rounded-xl px-3 py-1.5 flex items-center justify-center cursor-pointer hover:border-sky-400 hover:bg-sky-50/40";
+                renderWordBank();
+            }
+        }
+
+        function placeWordInZone(num, word) {
+            const zone = document.getElementById(`vocab-drop-${num}`);
+            if (!zone) return;
+
+            // إذا كانت الكلمة موجودة مسبقاً في خانة أخرى، نفرغ الخانة القديمة
+            vocabItems.forEach(item => {
+                if (!item.solvedByDefault && item.num !== num) {
+                    const otherZone = document.getElementById(`vocab-drop-${item.num}`);
+                    if (otherZone && otherZone.dataset.value === word) {
+                        otherZone.dataset.value = "";
+                        otherZone.innerHTML = `<span class="text-slate-400 text-xs font-medium pointer-events-none">اسحب الكلمة هنا</span>`;
+                        otherZone.className = "drop-zone flex-1 border-2 border-dashed border-slate-300 bg-slate-50/90 rounded-xl px-3 py-1.5 flex items-center justify-center cursor-pointer hover:border-sky-400 hover:bg-sky-50/40";
+                    }
+                }
+            });
+
+            zone.dataset.value = word;
+            zone.innerHTML = `
+                <span class="en-text text-sky-900 font-extrabold text-sm sm:text-base">${word}</span>
+                <i class="fa-solid fa-xmark text-slate-400 hover:text-rose-500 text-xs absolute right-3" title="إزالة الكلمة"></i>
+            `;
+            zone.className = "drop-zone relative flex-1 border-2 border-solid border-sky-400 bg-sky-50 rounded-xl px-7 py-1.5 flex items-center justify-center text-center cursor-pointer shadow-xs";
+
+            selectedBankWord = null;
+            renderWordBank();
+        }
+
+        const songAllLines = [
+            "Wake up, kid! Come on, wake up! Time to get out of bed! Get up, get dressed, eat a big breakfast. Catch your bus, that's what I said!",
+            "I am running to the bus stop. Hey, Mr. Bus Driver, can you wait? I need to get on this bus, But I am really late!",
+            "I'm sitting on the bus now! Finally! I feel OK! I'm reading my new comic book. It's going to be a great day!"
+        ];
+
+        // بناء بطاقات المفردات الـ 12 في الشبكة
+        function renderVocabCards() {
+            const grid = document.getElementById('vocab-grid');
+            if (!grid) return;
+
+            grid.innerHTML = vocabItems.map(item => {
+                const fieldHtml = item.solvedByDefault
+                    ? `<div class="flex-1 border-2 border-emerald-500 bg-emerald-50 text-emerald-800 rounded-xl px-3 py-1.5 text-center en-text font-extrabold text-sm sm:text-base shadow-xs">
+                           ${item.phrase}
+                       </div>`
+                    : `<div id="vocab-drop-${item.num}"
+                            data-value=""
+                            ondragover="handleZoneDragOver(event)"
+                            ondragleave="handleZoneDragLeave(event)"
+                            ondrop="handleZoneDrop(event, ${item.num})"
+                            onclick="handleZoneClick(${item.num})"
+                            class="drop-zone flex-1 border-2 border-dashed border-slate-300 bg-slate-50/90 rounded-xl px-3 py-1.5 flex items-center justify-center cursor-pointer hover:border-sky-400 hover:bg-sky-50/40">
+                           <span class="text-slate-400 text-xs font-medium pointer-events-none">اسحب الكلمة هنا</span>
+                       </div>`;
+
+                return `
+                    <div data-speak="${item.phrase}" class="sentence-box bg-white rounded-2xl border-2 border-slate-200/90 p-3.5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                        <!-- الصورة -->
+                        <div class="rounded-xl overflow-hidden border border-slate-200 mb-3 relative">
+                            ${item.svg}
+                            <button onclick="speakText('${item.phrase}', this)" class="audio-btn absolute top-2 right-2 w-8 h-8 rounded-full bg-white/95 hover:bg-pink-50 text-pink-600 shadow-md flex items-center justify-center border border-pink-200" title="استمع للنطق">
+                                <i class="fa-solid fa-volume-high text-xs"></i>
+                            </button>
+                        </div>
+
+                        <!-- الرقم وخانة السحب والإفلات -->
+                        <div class="space-y-1.5">
+                            <div class="flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-emerald-600 text-white text-xs font-extrabold flex items-center justify-center shrink-0">${item.num}</span>
+                                ${fieldHtml}
+                            </div>
+                            <div class="flex flex-col items-center justify-center text-center px-1 pt-1">
+                                <span dir="rtl" class="w-full text-center text-xs sm:text-sm font-bold text-slate-700">${item.arabic}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // التحقق من إجابات المفردات الـ 12
+        function checkAllVocab() {
+            let correctCount = 0;
+            vocabItems.forEach(item => {
+                if (item.solvedByDefault) {
+                    correctCount++;
+                    return;
+                }
+                const zone = document.getElementById(`vocab-drop-${item.num}`);
+                if (!zone) return;
+                const userVal = (zone.dataset.value || "").trim().toLowerCase();
+                const expected = item.phrase.toLowerCase();
+
+                zone.classList.remove('shake');
+                if (userVal === expected) {
+                    correctCount++;
+                    zone.className = "drop-zone relative flex-1 border-2 border-solid border-emerald-500 bg-emerald-50 rounded-xl px-3 py-1.5 flex items-center justify-center text-center shadow-xs";
+                    zone.innerHTML = `<span class="en-text text-emerald-800 font-extrabold text-sm sm:text-base">${item.phrase}</span>`;
+                } else {
+                    zone.className = "drop-zone relative flex-1 border-2 border-solid border-rose-500 bg-rose-50 rounded-xl px-7 py-1.5 flex items-center justify-center text-center cursor-pointer shake";
+                    if (userVal) {
+                        zone.innerHTML = `
+                            <span class="en-text text-rose-700 font-bold text-sm sm:text-base">${zone.dataset.value}</span>
+                            <i class="fa-solid fa-xmark text-rose-500 text-xs absolute right-3" title="إزالة الكلمة"></i>
+                        `;
+                    }
+                }
+            });
+
+            if (correctCount === vocabItems.length) {
+                showToast(`ممتاز يا بطل! جميع الكلمات (${correctCount}/${vocabItems.length}) صحيحة 100%!`);
+            } else {
+                showToast(`أحسنت! أجبت على ${correctCount} من ${vocabItems.length}. استمع للمعلمة وأكمل الباقي!`);
+            }
+        }
+
+        function showAllVocabAnswers() {
+            vocabItems.forEach(item => {
+                if (item.solvedByDefault) return;
+                const zone = document.getElementById(`vocab-drop-${item.num}`);
+                if (!zone) return;
+                zone.dataset.value = item.phrase;
+                zone.className = "drop-zone flex-1 border-2 border-solid border-emerald-500 bg-emerald-50 rounded-xl px-3 py-1.5 flex items-center justify-center shadow-xs";
+                zone.innerHTML = `<span class="en-text text-emerald-800 font-extrabold text-sm sm:text-base">${item.phrase}</span>`;
+            });
+            selectedBankWord = null;
+            renderWordBank();
+            showToast("تم إظهار جميع الإجابات الصحيحة! اضغط على السماعة للاستماع.");
+        }
+
+        function resetAllVocab() {
+            vocabItems.forEach(item => {
+                if (item.solvedByDefault) return;
+                const zone = document.getElementById(`vocab-drop-${item.num}`);
+                if (!zone) return;
+                zone.dataset.value = "";
+                zone.innerHTML = `<span class="text-slate-400 text-xs font-medium pointer-events-none">اسحب الكلمة هنا</span>`;
+                zone.className = "drop-zone flex-1 border-2 border-dashed border-slate-300 bg-slate-50/90 rounded-xl px-3 py-1.5 flex items-center justify-center cursor-pointer hover:border-sky-400 hover:bg-sky-50/40";
+            });
+            selectedBankWord = null;
+            initWordBank();
+            showToast("تمت إعادة الكلمات إلى الصندوق، حاول السحب والإفلات من جديد!");
+        }
+
+        // التحقق من إجابات الأنشودة (تمرين 4)
+        const songAnswers = {
+            1: "get dressed",
+            2: "catch",
+            3: "get on",
+            4: "comic book"
+        };
+
+        function checkSongAnswers() {
+            let correct = 0;
+            for (let i = 1; i <= 4; i++) {
+                const input = document.getElementById(`song-${i}`);
+                if (!input) continue;
+                const val = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
+                input.classList.remove('shake');
+
+                if (val === songAnswers[i]) {
+                    correct++;
+                    input.className = "vocab-input w-32 border-b-2 border-emerald-600 bg-emerald-100 rounded-t-md px-2 py-0.5 text-emerald-900 font-extrabold text-sm";
+                } else {
+                    input.className = "vocab-input w-32 border-b-2 border-rose-500 bg-rose-100 rounded-t-md px-2 py-0.5 text-rose-800 font-bold text-sm shake";
+                }
+            }
+
+            if (correct === 4) {
+                showToast("رائع! أكملت جميع فراغات الأنشودة بنجاح!");
+            } else {
+                showToast(`أحسنت! أكملت ${correct} من 4 فراغات. استمع للأنشودة وأكمل الباقي!`);
+            }
+        }
+
+        function fillSongAnswers() {
+            document.getElementById('song-1').value = "get dressed";
+            document.getElementById('song-2').value = "Catch";
+            document.getElementById('song-3').value = "get on";
+            document.getElementById('song-4').value = "comic book";
+            for (let i = 1; i <= 4; i++) {
+                const input = document.getElementById(`song-${i}`);
+                if (input) {
+                    input.className = "vocab-input w-32 border-b-2 border-emerald-600 bg-emerald-100 rounded-t-md px-2 py-0.5 text-emerald-900 font-extrabold text-sm";
+                }
+            }
+            showToast("تم إظهار كلمات الأنشودة! استمع وردّد مع المعلمة.");
+        }
+
+        // ==========================================
+        // نظام الصوت التعليمي للمعلمة (Gemini TTS + احتياطي المتصفح)
+        // ==========================================
+        let selectedVoiceName = "Achernar";
+        let isSlowTrainingMode = false;
+        let preferredFemaleVoice = null;
+        let isSequencePlaying = false;
+        let currentAudioElement = null;
+        let currentAbortController = null;
+        const audioCache = new Map();
+        const pendingFetches = new Map();
+
+        function toggleSpeechSpeed() {
+            isSlowTrainingMode = !isSlowTrainingMode;
+            const speedLabel = document.getElementById('speed-label');
+            if (speedLabel) {
+                speedLabel.textContent = isSlowTrainingMode ? "بطيء (تدريب)" : "عادي";
+            }
+            if (currentAudioElement) {
+                currentAudioElement.playbackRate = isSlowTrainingMode ? 0.78 : 0.92;
+            }
+            showToast(isSlowTrainingMode ? "تم تفعيل النطق البطيء الهادي للتدريب!" : "تم تفعيل النطق التعليمي الهادئ!");
+        }
+
+        function changeTeacherVoice(voiceName) {
+            selectedVoiceName = voiceName;
+            stopAudio();
+            preloadAllLessonAudio();
+            speakText("Hello! Let's read calmly together.");
+            showToast(`تم تفعيل صوت المعلمة الهادئة (${voiceName})`);
+        }
+
+        function pcmToWavBlob(base64Data, sampleRate = 24000) {
+            const binaryString = atob(base64Data);
+            const len = binaryString.length;
+            const pcmBytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                pcmBytes[i] = binaryString.charCodeAt(i);
+            }
+
+            const wavHeader = new ArrayBuffer(44);
+            const view = new DataView(wavHeader);
+
+            const writeString = (offset, string) => {
+                for (let i = 0; i < string.length; i++) {
+                    view.setUint8(offset + i, string.charCodeAt(i));
+                }
+            };
+
+            writeString(0, 'RIFF');
+            view.setUint32(4, 36 + pcmBytes.length, true);
+            writeString(8, 'WAVE');
+            writeString(12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true);
+            view.setUint16(22, 1, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, sampleRate * 2, true);
+            view.setUint16(32, 2, true);
+            view.setUint16(34, 16, true);
+            writeString(36, 'data');
+            view.setUint32(40, pcmBytes.length, true);
+
+            return new Blob([wavHeader, pcmBytes], { type: 'audio/wav' });
+        }
+
+        async function fetchTeacherVoiceUrl(text, signal = null) {
+            const cacheKey = `${selectedVoiceName}::${text}`;
+            if (audioCache.has(cacheKey)) return audioCache.get(cacheKey);
+            if (pendingFetches.has(cacheKey)) return pendingFetches.get(cacheKey);
+
+            const fetchPromise = (async () => {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+                const educationalPrompt = `Read aloud in a very calm, gentle, soothing, and soft-spoken American English female teacher voice. Speak at a relaxed, unhurried educational pace with crystal-clear articulation and warm patience for elementary students: "${text}"`;
+
+                const payload = {
+                    contents: [{
+                        parts: [{ text: educationalPrompt }]
+                    }],
+                    generationConfig: {
+                        responseModalities: ["AUDIO"],
+                        speechConfig: {
+                            voiceConfig: {
+                                prebuiltVoiceConfig: { voiceName: selectedVoiceName }
+                            }
+                        }
+                    },
+                    model: "gemini-2.5-flash-preview-tts"
+                };
+
+                let delay = 500;
+                for (let attempt = 0; attempt < 2; attempt++) {
+                    try {
+                        const fetchOptions = {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        };
+                        if (signal) fetchOptions.signal = signal;
+
+                        const response = await fetch(apiUrl, fetchOptions);
+                        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+                        const result = await response.json();
+                        const part = result?.candidates?.[0]?.content?.parts?.[0];
+                        const audioData = part?.inlineData?.data;
+                        const mimeType = part?.inlineData?.mimeType || "audio/L16;rate=24000";
+
+                        if (audioData) {
+                            const rateMatch = mimeType.match(/rate=(\d+)/);
+                            const sampleRate = rateMatch ? parseInt(rateMatch[1], 10) : 24000;
+                            const wavBlob = pcmToWavBlob(audioData, sampleRate);
+                            const url = URL.createObjectURL(wavBlob);
+                            audioCache.set(cacheKey, url);
+                            return url;
+                        }
+                    } catch (err) {
+                        if (err.name === 'AbortError') throw err;
+                        if (attempt < 1) {
+                            await new Promise(res => setTimeout(res, delay));
+                            delay *= 2;
+                        }
+                    }
+                }
+                return null;
+            })();
+
+            pendingFetches.set(cacheKey, fetchPromise);
+            try {
+                return await fetchPromise;
+            } finally {
+                pendingFetches.delete(cacheKey);
+            }
+        }
+
+        function preloadAllLessonAudio() {
+            const allTexts = [
+                ...allVocabPhrases,
+                ...songAllLines,
+                "I cut the grass for my dad.",
+                "I go with my grandparents to the supermarket."
+            ];
+            let index = 0;
+            async function loadNextBatch() {
+                if (index >= allTexts.length) return;
+                const url = await fetchTeacherVoiceUrl(allTexts[index]);
+                if (!url) return;
+                index++;
+                setTimeout(loadNextBatch, 150);
+            }
+            loadNextBatch();
+        }
+
+        function loadCalmTeacherVoice() {
+            if (!('speechSynthesis' in window)) return;
+            const voices = window.speechSynthesis.getVoices();
+            if (!voices || voices.length === 0) return;
+
+            const preferredNames = [
+                'Microsoft Ava Online (Natural)',
+                'Microsoft Jenny Online (Natural)',
+                'Microsoft Aria Online (Natural)',
+                'Google US English',
+                'Samantha',
+                'Ava',
+                'Allison',
+                'Victoria',
+                'Karen',
+                'Microsoft Zira',
+                'Female'
+            ];
+
+            for (const name of preferredNames) {
+                const found = voices.find(v => v.lang.startsWith('en') && v.name.includes(name));
+                if (found) {
+                    preferredFemaleVoice = found;
+                    return;
+                }
+            }
+            preferredFemaleVoice = voices.find(v => v.lang === 'en-US') || voices.find(v => v.lang.startsWith('en')) || voices[0];
+        }
+
+        if ('speechSynthesis' in window) {
+            loadCalmTeacherVoice();
+            window.speechSynthesis.onvoiceschanged = loadCalmTeacherVoice;
+        }
+
+        function setSpeakingUI(isSpeaking, statusLabel = "المعلمة تقرأ الآن...") {
+            const pulse = document.getElementById('teacher-pulse');
+            const statusText = document.getElementById('teacher-status-text');
+            const stopBtn = document.getElementById('stop-audio-btn');
+
+            if (isSpeaking) {
+                if (pulse) pulse.classList.remove('hidden');
+                if (statusText) statusText.textContent = statusLabel;
+                if (stopBtn) stopBtn.classList.remove('hidden');
+            } else {
+                if (pulse) pulse.classList.add('hidden');
+                if (statusText) statusText.textContent = "المعلمة جاهزة للقراءة";
+                if (stopBtn) stopBtn.classList.add('hidden');
+            }
+        }
+
+        function clearHighlights() {
+            document.querySelectorAll('.active-reading-box').forEach(el => {
+                el.classList.remove('active-reading-box');
+            });
+            document.querySelectorAll('.active-reading-text').forEach(el => {
+                el.classList.remove('active-reading-text');
+            });
+        }
+
+        function highlightSentence(text) {
+            clearHighlights();
+            if (!text) return;
+
+            const normalizedTarget = text.trim().replace(/\s+/g, ' ');
+            const speakElements = document.querySelectorAll('[data-speak]');
+
+            for (const el of speakElements) {
+                const attrText = (el.getAttribute('data-speak') || '').trim().replace(/\s+/g, ' ');
+                if (attrText === normalizedTarget) {
+                    if (el.classList.contains('sentence-box')) {
+                        el.classList.add('active-reading-box');
+                        const innerText = el.querySelector('.sentence-text');
+                        if (innerText) innerText.classList.add('active-reading-text');
+                    } else {
+                        el.classList.add('active-reading-text');
+                    }
+                    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    break;
+                }
+            }
+        }
+
+        function speakWithBrowserFallback(text, signal = null) {
+            return new Promise((resolve) => {
+                if (!('speechSynthesis' in window)) {
+                    resolve();
+                    return;
+                }
+
+                try {
+                    window.speechSynthesis.cancel();
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    if (!preferredFemaleVoice) loadCalmTeacherVoice();
+                    if (preferredFemaleVoice) utterance.voice = preferredFemaleVoice;
+                    utterance.lang = 'en-US';
+                    utterance.rate = isSlowTrainingMode ? 0.75 : 0.84;
+                    utterance.pitch = 1.02;
+
+                    let settled = false;
+                    const finish = () => {
+                        if (!settled) {
+                            settled = true;
+                            resolve();
+                        }
+                    };
+
+                    utterance.onend = finish;
+                    utterance.onerror = finish;
+
+                    if (signal) {
+                        signal.addEventListener('abort', () => {
+                            window.speechSynthesis.cancel();
+                            finish();
+                        }, { once: true });
+                    }
+
+                    window.speechSynthesis.speak(utterance);
+                } catch (e) {
+                    resolve();
+                }
+            });
+        }
+
+        function stopAudio() {
+            isSequencePlaying = false;
+            if (currentAbortController) {
+                currentAbortController.abort();
+                currentAbortController = null;
+            }
+            if (currentAudioElement) {
+                try {
+                    currentAudioElement.pause();
+                    currentAudioElement.currentTime = 0;
+                } catch (e) {}
+                currentAudioElement = null;
+            }
+            if ('speechSynthesis' in window) {
+                try {
+                    window.speechSynthesis.cancel();
+                } catch (e) {}
+            }
+            clearHighlights();
+            setSpeakingUI(false);
+        }
+
+        async function speakText(text, btnElement = null, keepSequenceState = false) {
+            if (!keepSequenceState) {
+                stopAudio();
+                currentAbortController = new AbortController();
+            }
+
+            const signal = currentAbortController ? currentAbortController.signal : null;
+            highlightSentence(text);
+            setSpeakingUI(true, "المعلمة تنطق الكلمة...");
+
+            try {
+                const audioUrl = await fetchTeacherVoiceUrl(text, signal);
+                if (signal && signal.aborted) return;
+
+                if (audioUrl) {
+                    await new Promise((resolve) => {
+                        const audio = new Audio(audioUrl);
+                        audio.playbackRate = isSlowTrainingMode ? 0.78 : 0.92;
+                        currentAudioElement = audio;
+                        let done = false;
+                        const finish = () => {
+                            if (!done) {
+                                done = true;
+                                currentAudioElement = null;
+                                resolve();
+                            }
+                        };
+                        audio.onended = finish;
+                        audio.onerror = finish;
+                        if (signal) {
+                            signal.addEventListener('abort', () => {
+                                audio.pause();
+                                finish();
+                            }, { once: true });
+                        }
+                        audio.play().catch(finish);
+                    });
+                } else {
+                    await speakWithBrowserFallback(text, signal);
+                }
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    await speakWithBrowserFallback(text, signal);
+                }
+            } finally {
+                if (!keepSequenceState && (!signal || !signal.aborted)) {
+                    clearHighlights();
+                    setSpeakingUI(false);
+                }
+            }
+        }
+
+        async function speakSequence(sentences, btnElement = null) {
+            stopAudio();
+            isSequencePlaying = true;
+            currentAbortController = new AbortController();
+            const signal = currentAbortController.signal;
+
+            try {
+                for (let i = 0; i < sentences.length; i++) {
+                    if (!isSequencePlaying || signal.aborted) break;
+
+                    if (i + 1 < sentences.length) {
+                        fetchTeacherVoiceUrl(sentences[i + 1], signal).catch(() => {});
+                    }
+
+                    await speakText(sentences[i], null, true);
+
+                    if (!isSequencePlaying || signal.aborted) break;
+                    if (i < sentences.length - 1) {
+                        await new Promise(res => setTimeout(res, 260));
+                    }
+                }
+            } finally {
+                if (!signal.aborted) {
+                    isSequencePlaying = false;
+                    clearHighlights();
+                    setSpeakingUI(false);
+                }
+            }
+        }
+
+        let toastTimer = null;
+        function showToast(message) {
+            const toast = document.getElementById('toast-message');
+            const toastText = document.getElementById('toast-text');
+            if (!toast || !toastText) return;
+
+            toastText.textContent = message;
+            toast.classList.remove('hidden');
+
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3500);
+        }
+
+        window.onload = function () {
+            renderVocabCards();
+            initWordBank();
+            loadCalmTeacherVoice();
+            preloadAllLessonAudio();
+        };
+    </script>
+</body>
+</html>
